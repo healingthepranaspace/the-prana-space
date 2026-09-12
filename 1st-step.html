@@ -207,6 +207,27 @@ h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;margin:0
 @keyframes fall{to{transform:translateY(280px);opacity:0}}
 .figure{font-size:50px;filter:drop-shadow(0 0 30px rgba(216,179,106,.45))}
 
+/* ---------- relationship bond ---------- */
+.bondbox{display:flex;align-items:center;justify-content:center;gap:6px;width:min(400px,88vw)}
+.bside{display:grid;place-items:center;gap:8px}
+.bheart{font-size:40px;filter:drop-shadow(0 0 22px rgba(216,179,106,.5));animation:beat 3.6s ease-in-out infinite}
+.bside:last-child .bheart{animation-delay:.9s}
+.blabel{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);max-width:9ch;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thread{position:relative;flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,rgba(216,179,106,.15),rgba(240,220,174,.75),rgba(216,179,106,.15));margin-bottom:22px;overflow:visible}
+.thread i{position:absolute;top:-4px;left:0;width:10px;height:10px;border-radius:50%;background:radial-gradient(circle,#fff,var(--gold-soft));box-shadow:0 0 18px rgba(240,220,174,.9);animation:travel 4.4s ease-in-out infinite}
+@keyframes travel{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:100%;opacity:0}}
+.bondbox.go .thread{height:3px;box-shadow:0 0 26px rgba(240,220,174,.6)}
+.bondbox.go .bheart{filter:drop-shadow(0 0 34px rgba(240,220,174,.85))}
+
+/* ---------- chakra body ---------- */
+.chakbox{width:min(250px,72vw)}
+.chakbox svg{width:100%;height:auto;overflow:visible}
+.chak{opacity:.20;transform-box:fill-box;transform-origin:center;transition:opacity 1.2s var(--ease),transform 1.2s var(--ease),filter 1.2s}
+.chak.on{opacity:1;transform:scale(1.5);filter:drop-shadow(0 0 14px currentColor)}
+.chak.done{opacity:.6}
+#ck-light{transform-box:fill-box;transform-origin:center;transition:transform 2.4s var(--ease),opacity 1.4s}
+.chakname{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-top:2px;min-height:16px}
+
 /* ---------- mini breath pacer ---------- */
 .minibreath{display:inline-flex;align-items:center;gap:12px;padding:10px 20px;border-radius:999px;border:1px solid var(--line);background:rgba(216,179,106,.07);margin:4px auto 2px}
 .mb-dot{width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 32%,#fff,var(--gold-soft),var(--gold));box-shadow:0 0 18px rgba(216,179,106,.7);transform:scale(.6);transition:transform 4s var(--ease)}
@@ -491,7 +512,8 @@ var PATTERNS = {
   calm:     [ {l:"Breathe in",s:4,sc:1.0,up:1}, {l:"Hold",s:4,sc:1.0}, {l:"Breathe out",s:6,sc:0.58}, {l:"Hold",s:2,sc:0.58} ],
   ground:   [ {l:"Breathe in",s:4,sc:1.0,up:1}, {l:"Breathe out",s:6,sc:0.58} ],
   heart:    [ {l:"Breathe in",s:5,sc:1.0,up:1}, {l:"Breathe out",s:5,sc:0.58} ],
-  energize: [ {l:"Breathe in",s:4,sc:1.0,up:1}, {l:"Hold",s:3,sc:1.0}, {l:"Breathe out",s:4,sc:0.58} ]
+  energize: [ {l:"Breathe in",s:4,sc:1.0,up:1}, {l:"Hold",s:3,sc:1.0}, {l:"Breathe out",s:4,sc:0.58} ],
+  pranic:   [ {l:"Breathe in",s:6,sc:1.0,up:1}, {l:"Hold",s:3,sc:1.0}, {l:"Breathe out",s:6,sc:0.58}, {l:"Hold",s:3,sc:0.58} ]
 };
 
 /* =====================================================================
@@ -501,6 +523,25 @@ var FORGIVE = [
   "To everyone who has hurt me, knowingly or unknowingly &mdash; I forgive you, and I let you go.",
   "To everyone I have hurt, knowingly or unknowingly &mdash; I ask for your forgiveness.",
   "And to myself &mdash; I forgive you. I release this. I choose peace."
+];
+
+var BOND_SCENES = [
+  [0,  "See {person} standing a little way in front of you. Just as they are."],
+  [12, "See a soft golden light rising from your heart and reaching theirs."],
+  [24, "Now picture it as you <em>want</em> it to be &mdash; the conversation going well, the ease returning."],
+  [36, "See both of you at peace. Nothing left to defend, nothing left to prove."],
+  [48, "Feel what that would feel like in your chest. Let it be real for a moment."],
+  [60, "Hold that picture. This is the version you are working towards."]
+];
+
+var CHAKRAS = [
+  {y:180, r:"#E0605C", n:"Base",         t:"Safe. Steady. Held by the earth."},
+  {y:152, r:"#E8934A", n:"Sacral",       t:"At ease in your body. Nothing forced."},
+  {y:124, r:"#E3C155", n:"Solar plexus", t:"Calm and steady. The knot loosens."},
+  {y:98,  r:"#7FC08A", n:"Heart",        t:"Soft and open. Breathe here a moment longer."},
+  {y:66,  r:"#6FA8D6", n:"Throat",       t:"Clear. Whatever is unsaid can settle."},
+  {y:38,  r:"#8A7FD0", n:"Third eye",    t:"Quiet mind. The thinking slows down."},
+  {y:16,  r:"#C9A6E0", n:"Crown",        t:"Light at the top of your head. Connected. At peace."}
 ];
 
 var PRACTICES = [
@@ -614,23 +655,30 @@ var PRACTICES = [
   ]
 },
 {
-  id:"love", emoji:"❤️", label:"I need relationship harmony", sub:"Reflect and reconnect", mins:"5 min",
+  id:"love", emoji:"❤️", label:"I need relationship harmony", sub:"Reflect and reconnect", mins:"6 min",
   tag:"Relationships",
   checkQ:"How much <em>tension</em> is there between you?",
-  close:"You changed the energy of the connection before a single word was spoken. Notice what feels different the next time you meet them.",
+  close:"You forgave, and then you pictured it healed. Both matter &mdash; forgiveness clears the old energy, visualisation builds the new. Hold that picture once a day and watch what changes between you.",
   steps:[
     {kind:"say", visual:"heart", head:"Every relationship is <em>an energy connection</em>",
-     say:"Before you speak to them, meet them in your heart. This quietly changes the conversation before it begins.",
+     say:"Before you speak to them, meet them in your heart. Clear what is old, then picture what you actually want. This quietly changes the conversation before it begins.",
      cta:"Begin"},
     {kind:"input", key:"person", ph:"First name is enough", head:"Who comes to mind?",
      say:"Just a name, for your eyes only. Nothing here leaves your screen."},
     {kind:"chips", key:"feel", head:"What sits between you?", visual:"heart",
      say:"Name it plainly. You are not being disloyal by being honest.",
      items:["Hurt","Distance","Feeling misunderstood","Resentment","I miss them","Worry for them"]},
-    {kind:"breath", pattern:"heart", cycles:5, visual:"heart", head:"Bring {person} into your heart",
+    {kind:"breath", pattern:"heart", cycles:4, visual:"heart", head:"Bring {person} into your heart",
      say:"Picture them standing in front of you. Breathe into your chest and let your heart soften &mdash; not to excuse anything, only to soften."},
+    {kind:"mantra", repeats:3, head:"Forgive, and be forgiven",
+     say:"Three rounds, slowly. Forgiveness is not saying it was fine &mdash; it is refusing to carry it any further.",
+     lines:["{person}, for whatever you have done that hurt me, knowingly or unknowingly &mdash; I forgive you.",
+            "For whatever I have done that hurt you, knowingly or unknowingly &mdash; I ask your forgiveness.",
+            "I release what is between us. I set us both free."]},
+    {kind:"visualise", secs:72, scenes:"bond", pattern:"heart", head:"Now see it <em>healed</em>",
+     say:"Let the pictures come. There is nothing to do but watch."},
     {kind:"mantra", repeats:3, head:"Bless them, and yourself",
-     say:"Three rounds. Say it as if you mean it &mdash; the feeling will catch up with the words.",
+     say:"Three rounds. Say it as if you mean it &mdash; the feeling catches up with the words.",
      lines:["May you be well. May you be at peace. May you be happy.",
             "May I be well. May I be at peace. May I be happy.",
             "May there be understanding and harmony between us."]},
@@ -640,18 +688,26 @@ var PRACTICES = [
   ]
 },
 {
-  id:"drained", emoji:"🥱", label:"I feel drained", sub:"Restore my energy", mins:"4 min",
+  id:"drained", emoji:"🥱", label:"I feel drained", sub:"Restore my energy", mins:"5 min",
   tag:"Fatigue &amp; low energy",
   checkQ:"How <em>drained</em> do you feel right now?",
-  close:"Not all tiredness is physical. When sleep alone does not fix it, the energy body usually needs cleaning first &mdash; then charging.",
+  close:"Pranic Breathing is the one to keep. Ten cycles in the morning, ten when the afternoon dips &mdash; it draws in far more energy than ordinary shallow breathing, and it costs you two minutes.",
   steps:[
     {kind:"say", visual:"shower", head:"Tiredness is often <em>stuck energy</em>",
-     say:"Clean first, then charge &mdash; in that order. Pouring fresh energy into a clogged system does not work for long.",
+     say:"Clean first, then charge &mdash; in that order. Pouring fresh energy into a clogged system never lasts long.",
      cta:"Begin"},
     {kind:"sweep", secs:40, head:"Sweep it off",
      say:"Brush your hands down your arms, shoulders, chest and legs &mdash; as if brushing off fine dust. Flick it away from you, towards the floor. Keep going until the timer ends."},
-    {kind:"breath", pattern:"energize", cycles:6, visual:"shower", head:"Now the light shower",
-     say:"Imagine bright golden-white light pouring down through the crown of your head, filling your chest, your belly, your arms and legs &mdash; right down to your fingertips."},
+    {kind:"list", head:"Pranic Breathing &mdash; how it works", btn:"I'm ready",
+     say:"A slow, rhythmic breath that draws in far more prana than your normal breathing. Read it once, then we will do it together.",
+     items:["Sit upright, shoulders relaxed. Rest one hand on your lower belly.",
+            "Breathe in for 6 counts &mdash; your <em>belly</em> expands outwards, not your chest or shoulders.",
+            "Hold for 3 counts, with the tip of your tongue touching the roof of your mouth.",
+            "Breathe out for 6 counts &mdash; the belly draws gently in.",
+            "Hold empty for 3 counts, then begin the next round.",
+            "Never strain. If you feel light-headed, return to normal breathing for a minute."]},
+    {kind:"breath", pattern:"pranic", cycles:6, visual:"shower", head:"Pranic Breathing",
+     say:"As you breathe in, draw bright golden-white prana down through the crown of your head. As you breathe out, let the dull, tired energy leave through your hands and feet."},
     {kind:"list", head:"Optional: Super Brain Yoga", btn:"Done &mdash; I feel it",
      say:"Two minutes. An old technique for lifting mental fog and sharpening the mind.",
      items:["Face east if you can. Hold your left earlobe with your right thumb and index finger, thumb in front.",
@@ -662,16 +718,23 @@ var PRACTICES = [
   ]
 },
 {
-  id:"peace", emoji:"🙏", label:"I need peace", sub:"Meditate", mins:"5&ndash;15 min",
+  id:"peace", emoji:"🙏", label:"I need peace", sub:"Meditate", mins:"2&ndash;15 min",
   tag:"Stillness",
   checkQ:"How <em>restless</em> do you feel right now?",
-  close:"Stillness is not the absence of thought &mdash; it is no longer being pulled by it. Even a few quiet minutes rebuild something the day keeps spending.",
+  close:"Stillness is not the absence of thought &mdash; it is no longer being pulled by it. Even two quiet minutes rebuild something the day keeps spending.",
   steps:[
     {kind:"say", visual:"orb", head:"Nowhere to go. <em>Nothing to become.</em>",
-     say:"A simple guided stillness. A bell at the beginning, one in the middle, one at the end. Everything in between belongs to you.",
-     groups:[{key:"dur", label:"How long?", items:[["5 minutes",300],["10 minutes",600],["15 minutes",900]], def:300}],
+     say:"Choose a short guided light meditation, or simple silence with a bell at the start, the middle and the end.",
+     groups:[
+       {key:"mode", label:"Which kind of stillness?",
+        items:[["2-min light through the chakras","chakra"],["Silent stillness","silent"]], def:"chakra"},
+       {key:"dur", label:"How long?", showIf:function(){ return OPT.mode==="silent"; },
+        items:[["5 minutes",300],["10 minutes",600],["15 minutes",900]], def:300}
+     ],
      cta:"Begin"},
-    {kind:"meditate", head:"Be still",
+    {kind:"chakra", when:function(){ return OPT.mode!=="silent"; }, head:"White light, one centre at a time",
+     say:"Sit upright, eyes closed or softly open. Imagine a soft white light entering at the base of your spine."},
+    {kind:"meditate", when:function(){ return OPT.mode==="silent"; }, head:"Be still",
      say:"Sit upright and comfortable. Eyes closed, or softly open."}
   ]
 }
@@ -727,7 +790,7 @@ $("ci-skip").addEventListener("click", function(){ BEFORE=null; enterPractice();
 $("ci-back").addEventListener("click", goHome);
 $("ci-sound").addEventListener("click", toggleSound);
 $("p-sound").addEventListener("click", toggleSound);
-$("p-back").addEventListener("click", function(){ if(IDX>0){ IDX--; renderStep(); } else goHome(); });
+$("p-back").addEventListener("click", function(){ prev(); });
 $("d-back").addEventListener("click", goHome);
 
 function enterPractice(){
@@ -735,7 +798,18 @@ function enterPractice(){
   $("p-tag").innerHTML=CUR.tag;
   IDX=0; show("s-practice"); renderStep();
 }
-function next(){ if(IDX < CUR.steps.length-1){ IDX++; renderStep(); } else finish(); }
+function visible(i){ var st=CUR.steps[i]; return !st.when || st.when(); }
+function visibleList(){ var a=[]; for(var i=0;i<CUR.steps.length;i++) if(visible(i)) a.push(i); return a; }
+function next(){
+  var i=IDX+1;
+  while(i<CUR.steps.length && !visible(i)) i++;
+  if(i<CUR.steps.length){ IDX=i; renderStep(); } else finish();
+}
+function prev(){
+  var i=IDX-1;
+  while(i>=0 && !visible(i)) i--;
+  if(i>=0){ IDX=i; renderStep(); } else goHome();
+}
 
 /* =====================================================================
    VISUALS
@@ -811,6 +885,27 @@ function makeShower(){
   }
   s.innerHTML=d+'<div class="figure">🧘</div>';
   return s;
+}
+function makeBond(person){
+  var b=h("div","bondbox");
+  b.innerHTML='<div class="bside"><div class="bheart">🤍</div><div class="blabel">You</div></div>'+
+              '<div class="thread"><i></i></div>'+
+              '<div class="bside"><div class="bheart">🤍</div><div class="blabel">'+(person||"Them")+'</div></div>';
+  return b;
+}
+function makeChakraBody(){
+  var b=h("div","chakbox"), dots="";
+  CHAKRAS.forEach(function(c,i){
+    dots+='<circle class="chak" id="ck'+i+'" cx="110" cy="'+c.y+'" r="8" fill="'+c.r+'"/>';
+  });
+  b.innerHTML='<svg viewBox="0 0 220 215">'+
+    '<defs><radialGradient id="lg"><stop offset="0%" stop-color="#fff"/><stop offset="60%" stop-color="rgba(255,255,255,.5)"/><stop offset="100%" stop-color="rgba(255,255,255,0)"/></radialGradient></defs>'+
+    '<circle cx="110" cy="38" r="23" fill="none" stroke="rgba(216,179,106,.55)" stroke-width="1.3"/>'+
+    '<path d="M110 61 C 84 66, 70 96, 68 140 L152 140 C150 96, 136 66, 110 61 Z" fill="none" stroke="rgba(216,179,106,.55)" stroke-width="1.3"/>'+
+    '<path d="M68 140 C 40 142, 26 160, 30 178 C 40 198, 180 198, 190 178 C 194 160, 180 142, 152 140" fill="none" stroke="rgba(216,179,106,.55)" stroke-width="1.3"/>'+
+    '<path d="M74 92 C 46 104, 40 138, 54 168 M146 92 C 174 104, 180 138, 166 168" fill="none" stroke="rgba(216,179,106,.35)" stroke-width="1.2"/>'+
+    '<circle id="ck-light" cx="110" cy="180" r="26" fill="url(#lg)" opacity="0"/>'+dots+'</svg>';
+  return b;
 }
 function makeRing(){
   var r=h("div","ring");
@@ -919,9 +1014,8 @@ function renderStep(){
 
   /* progress dots */
   var dots=$("p-dots"); dots.innerHTML="";
-  CUR.steps.forEach(function(_,i){
-    var d=h("div","dot"+(i===IDX?" on":(i<IDX?" done":"")));
-    dots.appendChild(d);
+  visibleList().forEach(function(i){
+    dots.appendChild(h("div","dot"+(i===IDX?" on":(i<IDX?" done":""))));
   });
 
   switch(st.kind){
@@ -930,6 +1024,12 @@ function renderStep(){
     case "say": {
       var v=visualFor(st.visual); if(v) stage.appendChild(v);
       if(st.groups){
+        var wraps=[];
+        var refresh=function(){
+          wraps.forEach(function(pair){
+            pair.el.classList.toggle("hidden", !!(pair.g.showIf && !pair.g.showIf()));
+          });
+        };
         st.groups.forEach(function(g){
           var wrapG=h("div");
           wrapG.appendChild(h("div","tiny",'<span style="letter-spacing:.24em;text-transform:uppercase">'+g.label+"</span>"));
@@ -939,13 +1039,15 @@ function renderStep(){
             c.addEventListener("click", function(){
               OPT[g.key]=it[1];
               Array.prototype.forEach.call(row.children,function(x){ x.classList.remove("on"); });
-              c.classList.add("on"); tick(true);
+              c.classList.add("on"); tick(true); refresh();
             });
             row.appendChild(c);
           });
           wrapG.appendChild(row);
           extra.appendChild(wrapG);
+          wraps.push({g:g, el:wrapG});
         });
+        refresh();
       }
       ctr.appendChild(mkBtn(st.cta||"Continue","",next));
       break;
@@ -1108,7 +1210,7 @@ function renderStep(){
     case "mantra": {
       stage.style.minHeight="0px";
       var m=h("div","mantra");
-      st.lines.forEach(function(l){ m.appendChild(h("p","",l)); });
+      st.lines.forEach(function(l){ m.appendChild(h("p","",tpl(l))); });
       var beads=h("div","beads");
       for(var bi=0;bi<st.repeats;bi++) beads.appendChild(h("div","bead"));
       m.appendChild(beads);
@@ -1211,6 +1313,68 @@ function renderStep(){
       break;
     }
 
+    /* ---------- positive visualisation (relationships) ---------- */
+    case "visualise": {
+      var bond=makeBond(ANS.person||"Them");
+      stage.appendChild(bond);
+      later(function(){ bond.classList.add("go"); }, 700);
+      var pacer=makeMini(); extra.appendChild(pacer.el);
+      var total2=st.secs||72;
+      BOND_SCENES.forEach(function(sc){
+        later(function(){ say.innerHTML=tpl(sc[1]); tick(true); }, sc[0]*1000);
+      });
+      runBreath(st.pattern||"heart", total2, pacer, extra, function(){
+        say.innerHTML="Keep that picture. You can return to it any time &mdash; it is doing quiet work.";
+        ctr.innerHTML=""; ctr.appendChild(mkBtn("Continue","",next));
+      });
+      var ve=h("button","linkbtn","Continue");
+      ve.addEventListener("click", function(){ clearTimers(); next(); });
+      ctr.appendChild(ve);
+      break;
+    }
+
+    /* ---------- white light through the chakras ---------- */
+    case "chakra": {
+      var cb=makeChakraBody(); stage.appendChild(cb);
+      var pacer2=makeMini(); extra.appendChild(pacer2.el);
+      var nameEl=h("div","chakname",""); extra.appendChild(nameEl);
+      var light=cb.querySelector("#ck-light");
+      var per=10, ci=0, baseY=CHAKRAS[0].y;
+      var totalC=CHAKRAS.length*per+18;
+      bell(528,3.4,.16);
+      function lightUp(){
+        if(ci>=CHAKRAS.length){
+          nameEl.textContent="Whole body";
+          say.innerHTML="Now let the light spill over and fill your whole body &mdash; head to toes. Rest here.";
+          CHAKRAS.forEach(function(_,k){ cb.querySelector("#ck"+k).classList.add("on"); });
+          light.style.opacity=".85";
+          light.style.transform="translate(0,"+(CHAKRAS[CHAKRAS.length-1].y-baseY)+"px) scale(3.4)";
+          bell(639,4,.13);
+          return;
+        }
+        var c=CHAKRAS[ci], dot=cb.querySelector("#ck"+ci);
+        if(ci>0){ var prevDot=cb.querySelector("#ck"+(ci-1)); prevDot.classList.remove("on"); prevDot.classList.add("done"); }
+        dot.classList.add("on");
+        light.style.opacity=".9";
+        light.style.transform="translate(0,"+(c.y-baseY)+"px)";
+        nameEl.textContent=c.n;
+        say.innerHTML=c.t;
+        tick(true);
+        ci++;
+        later(lightUp, per*1000);
+      }
+      lightUp();
+      runBreath("heart", totalC, pacer2, extra, function(){
+        head.innerHTML="Gently, <em>come back</em>";
+        say.innerHTML="Wiggle your fingers and toes. Take your time opening your eyes.";
+        ctr.innerHTML=""; ctr.appendChild(mkBtn("Continue","",next));
+      });
+      var ce=h("button","linkbtn","End here");
+      ce.addEventListener("click", function(){ clearTimers(); next(); });
+      ctr.appendChild(ce);
+      break;
+    }
+
     /* ---------- open meditation ---------- */
     case "meditate": {
       var secs2=OPT.dur||300;
@@ -1249,7 +1413,7 @@ function renderStep(){
       break;
     }
   }
-  if(st.kind!=="chips" && st.kind!=="write" && st.kind!=="input" && st.kind!=="mantra" && st.kind!=="list"){
+  if(["chips","write","input","mantra","list"].indexOf(st.kind)<0){
     stage.style.minHeight="";
   }
 }
