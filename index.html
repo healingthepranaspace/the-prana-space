@@ -287,6 +287,9 @@
     box-shadow:0 30px 60px -38px rgba(42,26,64,.55)}
   .slide img{width:100%; aspect-ratio:3/2; object-fit:cover; display:block;
     -webkit-user-drag:none; user-select:none; transition:transform .6s ease}
+  /* focal points so the desktop 3:2 frame never cuts the logo or faces */
+  .slide.f-mid img{object-position:50% 38%}
+  .slide.f-left img{object-position:0% 50%}
   .slide:hover img{transform:scale(1.03)}
   .slide figcaption{position:absolute; left:0; right:0; bottom:0; padding:38px 22px 18px; color:#fff;
     background:linear-gradient(180deg, transparent, rgba(28,17,44,.55) 42%, rgba(28,17,44,.86))}
@@ -297,7 +300,12 @@
   @media(max-width:920px){
     .gal-head{flex-direction:column; align-items:flex-start; gap:18px}
     .gal-nav{display:none}
-    .slide{flex:0 0 86%}
+    .slide{flex:0 0 88%}
+    /* show the full, uncropped photo on mobile */
+    .rail{align-items:flex-start}
+    .slide img{aspect-ratio:auto; height:auto; object-fit:contain; object-position:center}
+    .slide:hover img{transform:none}
+    .slide figcaption{padding:30px 18px 14px}
   }
 
   /* reveal */
@@ -686,16 +694,16 @@
     </div>
   </div>
   <div class="rail" id="galRail" tabindex="0" aria-label="Photos from sessions, scroll horizontally">
-    <figure class="slide">
-      <img src="assets/g1.jpg" alt="A group healing session held in a home in the evening" loading="lazy" width="1200" height="800" />
+    <figure class="slide f-mid">
+      <img src="assets/g1.jpg" alt="A group healing session held in a home in the evening" loading="lazy" width="1440" height="1080" />
       <figcaption><b>Group healing circles</b><span>Small, intimate sessions in a calm, familiar space</span></figcaption>
     </figure>
-    <figure class="slide">
-      <img src="assets/g2.jpg" alt="A community meditation session with participants seated in a sunlit room" loading="lazy" width="1200" height="800" />
+    <figure class="slide f-mid">
+      <img src="assets/g2.jpg" alt="A community meditation session with participants seated in a sunlit room" loading="lazy" width="1440" height="1080" />
       <figcaption><b>Community meditation</b><span>Open to all ages, no experience needed</span></figcaption>
     </figure>
-    <figure class="slide">
-      <img src="assets/g3.jpg" alt="A workplace meditation session with a team at their desks" loading="lazy" width="1200" height="800" />
+    <figure class="slide f-left">
+      <img src="assets/g3.jpg" alt="A workplace meditation session with a team at their desks" loading="lazy" width="1440" height="810" />
       <figcaption><b>Workplace sessions</b><span>Bringing calm and focus into the working day</span></figcaption>
     </figure>
   </div>
