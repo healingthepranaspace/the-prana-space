@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>The Prana Space — Pranic Healing & Counselling with Mamta Kaushik | Pune</title>
-<meta name="description" content="Gentle, no-touch Pranic Healing and Counselling Psychology with Mamta Kaushik. Release stress, clear emotional blocks and feel like yourself again. 2000+ sessions. Pune · remote & in-person." />
-<meta property="og:title" content="The Prana Space — Heal · Balance · Transform" />
-<meta property="og:description" content="Pranic Healing & Counselling Psychology with Mamta Kaushik. 2000+ sessions. Remote & in-person." />
+<title>The Prana Space · Pranic Healing &amp; Counselling with Mamta Kaushik</title>
+<meta name="description" content="Personalised Pranic Healing and Counselling sessions with Mamta Kaushik. Release stress, clear emotional blocks and feel like yourself again. 2000+ sessions. Online &amp; in-person." />
+<meta property="og:title" content="The Prana Space · Heal · Balance · Transform" />
+<meta property="og:description" content="Pranic Healing &amp; Counselling with Mamta Kaushik. 2000+ sessions. Online &amp; in-person." />
 <meta property="og:type" content="website" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Ccircle cx='60' cy='60' r='58' fill='%232A1A40'/%3E%3Cg fill='%23E6C56F'%3E%3Cpath d='M60 30c-5 10-5 22 0 34 5-12 5-24 0-34z'/%3E%3C/g%3E%3Ccircle cx='60' cy='66' r='10' fill='%238E74C0'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --ivory:#F7F4EE; --ivory-2:#EFEAE0; --card:#FCFBF7;
@@ -96,13 +96,23 @@
   .hero{position:relative; padding:64px 0 40px; overflow:hidden}
   .hero-grid{display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center}
   .hero h1{font-size:clamp(2.5rem,5.4vw,4.2rem); font-weight:400; margin:20px 0 0; color:var(--plum); letter-spacing:-.018em; line-height:1.04}
-  .hero h1 em{font-style:italic; font-weight:400; color:var(--violet)}
+  .hero h1 em{font-family:'Instrument Serif',var(--serif); font-style:italic; font-weight:400;
+    color:var(--violet); font-size:1.14em; letter-spacing:-.005em; padding-right:.04em}
   .hero .lead{font-size:1.12rem; color:var(--muted); margin:22px 0 30px; max-width:33ch}
   .hero-cta{display:flex; gap:14px; flex-wrap:wrap}
   .trust{display:flex; gap:22px; flex-wrap:wrap; margin-top:30px; align-items:center}
   .trust span{display:flex; align-items:center; gap:8px; font-size:.86rem; color:var(--muted)}
   .trust b{font-family:var(--serif); color:var(--plum); font-size:1.05rem; font-weight:500}
   .trust .dot{width:5px;height:5px;border-radius:50%;background:var(--gold)}
+  /* authority stat bar */
+  .statbar{display:grid; grid-template-columns:repeat(4,auto); gap:0; margin-top:34px;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:16px 0; max-width:560px}
+  .statbar .stat{padding:0 18px; border-left:1px solid var(--line)}
+  .statbar .stat:first-child{padding-left:0; border-left:none}
+  .statbar .stat b{display:block; font-family:var(--serif); font-weight:600; font-size:1.5rem;
+    line-height:1.1; color:var(--plum); letter-spacing:-.02em}
+  .statbar .stat span{display:block; font-size:.72rem; line-height:1.35; color:var(--muted); margin-top:3px}
+  .trust-line{font-size:.85rem; color:var(--muted); margin:14px 0 0}
   /* hero art */
   .hero-media{position:relative; width:100%; max-width:520px; margin-left:auto; aspect-ratio:4/5;
     border-radius:26px; overflow:hidden; isolation:isolate;
@@ -254,6 +264,42 @@
     display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; font-size:.8rem; color:rgba(238,232,250,.65)}
   .disclaimer .tag{font-family:var(--script); font-style:italic; font-size:1.3rem; color:#C8B6EC}
 
+  /* ---------- gallery / moments ---------- */
+  .gallery{overflow:hidden; background:linear-gradient(180deg,rgba(235,238,224,.45),transparent 70%)}
+  .gal-head{display:flex; align-items:flex-end; justify-content:space-between; gap:24px;
+    text-align:left; max-width:none; margin-bottom:34px}
+  .gal-head p{margin:14px 0 0; max-width:46ch}
+  .gal-head h2{margin-top:14px}
+  .gal-nav{display:flex; gap:10px; flex:none}
+  .gnav{width:46px; height:46px; border-radius:50%; cursor:pointer; display:grid; place-items:center;
+    background:var(--card); color:var(--plum); border:1px solid var(--line);
+    transition:transform .25s, background .25s, color .25s, opacity .25s}
+  .gnav:hover{background:var(--plum); color:#fff; transform:translateY(-2px)}
+  .gnav:disabled{opacity:.35; cursor:default; transform:none; background:var(--card); color:var(--plum)}
+  .rail{display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+    padding:4px 26px 10px; margin:0 auto; max-width:var(--maxw);
+    scrollbar-width:none; -ms-overflow-style:none; cursor:grab}
+  .rail::-webkit-scrollbar{display:none}
+  .rail.dragging{cursor:grabbing; scroll-behavior:auto; scroll-snap-type:none}
+  .rail:focus-visible{outline:2px solid var(--violet); outline-offset:4px; border-radius:var(--r)}
+  .slide{flex:0 0 clamp(280px, 62%, 660px); scroll-snap-align:center; margin:0; position:relative;
+    border-radius:var(--r); overflow:hidden; background:var(--card);
+    box-shadow:0 30px 60px -38px rgba(42,26,64,.55)}
+  .slide img{width:100%; aspect-ratio:3/2; object-fit:cover; display:block;
+    -webkit-user-drag:none; user-select:none; transition:transform .6s ease}
+  .slide:hover img{transform:scale(1.03)}
+  .slide figcaption{position:absolute; left:0; right:0; bottom:0; padding:38px 22px 18px; color:#fff;
+    background:linear-gradient(180deg, transparent, rgba(28,17,44,.55) 42%, rgba(28,17,44,.86))}
+  .slide figcaption b{display:block; font-family:var(--serif); font-weight:500; font-size:1.12rem; letter-spacing:-.005em}
+  .slide figcaption span{display:block; font-size:.85rem; opacity:.85; margin-top:2px}
+  .gal-hint{text-align:center; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); margin:22px 0 0}
+  @media(max-width:920px){
+    .gal-head{flex-direction:column; align-items:flex-start; gap:18px}
+    .gal-nav{display:none}
+    .slide{flex:0 0 86%}
+  }
+
   /* reveal */
   .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease}
   .reveal.in{opacity:1; transform:none}
@@ -385,6 +431,7 @@
       <a href="#healing">Pranic Healing</a>
       <a href="#sessions">Sessions</a>
       <a href="#stories">Stories</a>
+      <a href="#moments">Moments</a>
       <a href="#contact">Contact</a>
       <a class="btn btn-gold" href="#contact">Book a session</a>
     </nav>
@@ -402,16 +449,18 @@
     <div class="hero-copy">
       <span class="eyebrow reveal">Heal · Balance · Transform</span>
       <h1 class="reveal">Restore your energy.<br><em>Reclaim</em> your calm.</h1>
-      <p class="lead reveal">Gentle, no-touch Pranic Healing and Counselling Psychology with Mamta Kaushik — to release stress, clear emotional blocks, and help you feel like yourself again.</p>
+      <p class="lead reveal">Personalised Pranic Healing and Counselling sessions to help you release stress, clear emotional blocks and feel like yourself again.</p>
       <div class="hero-cta reveal">
         <a class="btn btn-gold" href="#contact">Book a session</a>
         <a class="btn btn-ghost" href="#healing">How it works</a>
       </div>
-      <div class="trust reveal">
-        <span><b>2000+</b>&nbsp;sessions</span><span class="dot"></span>
-        <span><b>7+</b>&nbsp;years healing</span><span class="dot"></span>
-        <span>Pune · remote &amp; in-person</span>
+      <div class="statbar reveal">
+        <div class="stat"><b>2000+</b><span>Sessions held</span></div>
+        <div class="stat"><b>7+</b><span>Years of healing</span></div>
+        <div class="stat"><b>16+</b><span>Years with people &amp; behaviour</span></div>
+        <div class="stat"><b>APH</b><span>Certified Pranic Healer</span></div>
       </div>
+      <p class="trust-line reveal">Online &amp; in-person · Individuals, parents &amp; workplaces</p>
     </div>
     <div class="hero-media reveal">
       <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg"
@@ -429,25 +478,25 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">What is Pranic Healing?</span>
-      <h2>A no-touch energy practice</h2>
-      <p>Pranic Healing works with prana — your body's own life-force energy — to cleanse, energize and rebalance you on the physical, emotional and mental levels. It is safe, non-invasive and complements medical and psychological care.</p>
+      <h2>A gentle, no-touch energy healing practice</h2>
+      <p>Pranic Healing works with prana, the body's life-force energy, to cleanse, energize and revitalize you. It is safe, non-invasive and complements medical and psychological care.</p>
     </div>
     <div class="steps">
       <div class="step reveal"><span class="num">01</span>
         <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 14c3-2 6-2 9 0s6 2 9 0M3 9c3-2 6-2 9 0s6 2 9 0"/></svg></div>
-        <h3>Cleanse</h3><p>Clears stagnant, heavy energy and blockages from your energy field.</p>
+        <h3>Cleanse</h3><p>Release stagnant energy and blockages from your energy field.</p>
       </div>
       <div class="step reveal"><span class="num">02</span>
         <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></div>
-        <h3>Energize</h3><p>Replenishes your system with fresh, vital, high-frequency prana.</p>
+        <h3>Energize</h3><p>Replenish your system with fresh, vital, high-frequency prana.</p>
       </div>
       <div class="step reveal"><span class="num">03</span>
         <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="6" r="2.4"/><path d="M7 12c2-2 8-2 10 0M5 17c3-2.5 11-2.5 14 0"/></svg></div>
-        <h3>Balance</h3><p>Restores harmony across the chakras so body and mind settle.</p>
+        <h3>Balance</h3><p>Restore harmony to the chakras so body and mind work as one.</p>
       </div>
       <div class="step reveal"><span class="num">04</span>
         <div class="ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z"/></svg></div>
-        <h3>Transform</h3><p>Supports your natural healing and a lasting sense of clarity and peace.</p>
+        <h3>Renew</h3><p>Support your body's natural healing and build a lasting sense of clarity, resilience and peace.</p>
       </div>
     </div>
   </div>
@@ -466,15 +515,17 @@
       <span class="eyebrow">About</span>
       <p class="hello">Hi, I'm Mamta.</p>
       <h2 style="margin-top:6px">The heart behind The Prana Space</h2>
-      <p style="margin-top:18px">I'm a Counselling Psychologist and Pranic Healer. For over seven years I've walked beside people on their healing journey — helping them release stress, emotional blocks and patterns that no longer serve them, so they can feel lighter, calmer and more aligned.</p>
-      <p>I blend the science of psychology with the art of energy healing — for holistic transformation of mind, emotions and energy.</p>
+      <p style="margin-top:18px">My journey didn't begin in healing. It began in a classroom. I spent years as a French professor, in love with language, literature and the quiet joy of connecting with young minds. Alongside that, I built a long career in the corporate world, learning how people think, what drives them, and how much they quietly carry.</p>
+      <p>Somewhere in all of it, a different question began to follow me around: what actually helps a person feel better from the inside out? That question led me to Counselling Psychology, then to Pranic Healing and meditation, where science met something deeper.</p>
+      <p>Today I hold space for people in the middle of real life. Professionals running on empty. Parents and caregivers, especially those raising neurodivergent children, who give everything and rarely pause for themselves. People who look fine on the outside and feel heavy on the inside.</p>
+      <p>I don't believe in one-size-fits-all healing. Every session begins with listening, and we go at the pace that feels right for you. You don't have to go through it alone. I'm here to walk with you.</p>
       <ul class="creds">
         <li><span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="9" r="5"/><path d="m8.5 13-2 8 5.5-3 5.5 3-2-8"/></svg></span>
           <div><b>Associate Certified Pranic Healer (APH)</b><small>Trained &amp; certified in the system of Master Choa Kok Sui</small></div></li>
         <li><span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 3 8l9 5 9-5-9-5zM5 11v5c0 1.5 3.5 3 7 3s7-1.5 7-3v-5"/></svg></span>
           <div><b>Diploma in Counselling Psychology</b><small>Symbiosis Centre for Distance Learning, Pune</small></div></li>
         <li><span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z"/></svg></span>
-          <div><b>Certified Pranic Healer (CPH)</b><small>Advanced training — currently in progress</small></div></li>
+          <div><b>Certified Pranic Healer (CPH)</b><small>Advanced training, currently in progress</small></div></li>
         <li><span class="ci"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
           <div><b>16+ years of corporate experience</b><small>A grounded understanding of human behaviour, strategy &amp; people</small></div></li>
       </ul>
@@ -488,7 +539,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Sessions</span>
       <h2>Ways we can work together</h2>
-      <p>Every session is personalised to you, and available remotely or in person. Reach out and we'll find the right starting point.</p>
+      <p>Every session is personalised to your healing needs and offered online or in person. Reach out and we'll find the right starting point.</p>
     </div>
     <div class="offers">
       <div class="offer reveal">
@@ -505,17 +556,8 @@
         <div class="ob">
           <span class="tag free">Free · Community</span>
           <h3>Twin Hearts Meditation</h3>
-          <p>A guided heart-based meditation to awaken inner peace, love and harmony. Open community sessions — no experience needed.</p>
+          <p>A guided heart-based meditation to awaken inner peace, love and harmony. Open community sessions, no experience needed.</p>
           <a class="link" href="#contact">Join a session <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        </div>
-      </div>
-      <div class="offer reveal">
-        <div class="oic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3a4 4 0 0 0-1 7.9V21M15 3a4 4 0 0 1 1 7.9V21"/><path d="M8 11h8"/></svg></div>
-        <div class="ob">
-          <span class="tag">Practice</span>
-          <h3>Super Brain Yoga</h3>
-          <p>A simple, powerful technique to sharpen memory, focus and clarity while reducing stress and lifting overall well-being.</p>
-          <a class="link" href="#contact">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
       <div class="offer reveal">
@@ -527,8 +569,53 @@
           <a class="link" href="#contact">Reach out <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
+      <div class="offer reveal">
+        <div class="oic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3c3 3.5 4.5 6.2 4.5 8.6A4.5 4.5 0 0 1 12 16a4.5 4.5 0 0 1-4.5-4.4C7.5 9.2 9 6.5 12 3z"/><path d="M12 16v5"/></svg></div>
+        <div class="ob">
+          <span class="tag">Aromatherapy</span>
+          <h3>Essential Oils</h3>
+          <p>Therapeutic-grade oils chosen for your needs, to calm the nervous system, lift mood and support your healing between sessions.</p>
+          <a class="link" href="#contact">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="offer reveal">
+        <div class="oic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 6 9l6 13 6-13z"/><path d="M6 9h12M12 2v20"/></svg></div>
+        <div class="ob">
+          <span class="tag">Energy Work</span>
+          <h3>Crystal Healing</h3>
+          <p>Crystals used alongside energy healing to hold, amplify and stabilise the work, so shifts settle more deeply and last longer.</p>
+          <a class="link" href="#contact">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="offer reveal">
+        <div class="oic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-5 3 10 2.5-7 1.8 4H21"/></svg></div>
+        <div class="ob">
+          <span class="tag">Guided Practice</span>
+          <h3>Breathwork</h3>
+          <p>Simple, guided breathing practices to settle anxiety, steady the nervous system and bring you back to the present moment.</p>
+          <a class="link" href="#contact">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="offer reveal">
+        <div class="oic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.2"/><ellipse cx="12" cy="12" rx="9.5" ry="4.4"/><ellipse cx="12" cy="12" rx="9.5" ry="4.4" transform="rotate(60 12 12)"/></svg></div>
+        <div class="ob">
+          <span class="tag">Deep Healing</span>
+          <h3>Cellular Healing</h3>
+          <p>Focused energy work at the cellular level, to clear imprints held in the body and support renewal from the inside out.</p>
+          <a class="link" href="#contact">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="offer reveal">
+        <div class="oic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="4.5" r="2.2"/><circle cx="6" cy="13" r="2.2"/><circle cx="18" cy="13" r="2.2"/><circle cx="12" cy="20.5" r="2.2"/><path d="M12 6.7v2.1M10.4 10.6 7.6 11.9M16.4 11.9l-2.8-1.3M7.4 14.7l3 3.8M16.6 14.7l-3 3.8"/></svg></div>
+        <div class="ob">
+          <span class="tag">Lineage Work</span>
+          <h3>Ancestral Healing</h3>
+          <p>Gentle work with generational patterns carried through your family line, so old cycles can soften and stop repeating through you.</p>
+          <a class="link" href="#contact">Learn more <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
     </div>
-    <p class="offer-note reveal">Personalised to you · remote or in-person · message for current offerings &amp; fees.</p>
+    <p class="offer-note reveal">Personalised to you · online or in-person · message for current offerings &amp; energy exchange.</p>
   </div>
 </section>
 
@@ -540,12 +627,12 @@
       <h2>If any of this sounds familiar</h2>
     </div>
     <div class="help-grid">
-      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.2-1.5 6.8-1.5 8 0M9 9h.01M15 9h.01"/></svg></div><div><b>Stress &amp; anxiety</b><small>A racing mind that won't slow down</small></div></div>
-      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z"/></svg></div><div><b>Emotional overwhelm</b><small>Carrying more than feels manageable</small></div></div>
-      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 13a8.5 8.5 0 1 1-9.5-9 6.5 6.5 0 0 0 9.5 9z"/></svg></div><div><b>Sleep issues</b><small>Restless nights and tired mornings</small></div></div>
-      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 .8-3.8 2-5"/></svg></div><div><b>Relationship strain</b><small>Tension that's hard to shift</small></div></div>
-      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 3 6 14h5l-1 7 8-12h-6z"/></svg></div><div><b>Fatigue &amp; low energy</b><small>Running on empty, depleted</small></div></div>
-      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg></div><div><b>Inner peace &amp; clarity</b><small>A longing to feel grounded again</small></div></div>
+      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 15c1.2-1.5 6.8-1.5 8 0M9 9h.01M15 9h.01"/></svg></div><div><b>Stress &amp; Anxiety</b><small>A racing mind that won't slow down</small></div></div>
+      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z"/></svg></div><div><b>Emotional Overwhelm</b><small>Carrying more than you can manage</small></div></div>
+      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 13a8.5 8.5 0 1 1-9.5-9 6.5 6.5 0 0 0 9.5 9z"/></svg></div><div><b>Sleep Challenges</b><small>Restless nights and tired mornings</small></div></div>
+      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2 .8-3.8 2-5"/></svg></div><div><b>Relationship Strain</b><small>Navigating conflict, emotional distance or recurring patterns</small></div></div>
+      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 3 6 14h5l-1 7 8-12h-6z"/></svg></div><div><b>Fatigue &amp; Low Energy</b><small>Feeling drained or depleted</small></div></div>
+      <div class="help reveal"><div class="hic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M18.4 5.6l-2 2M7.6 16.4l-2 2"/></svg></div><div><b>Inner Peace &amp; Clarity</b><small>A longing to feel grounded again</small></div></div>
     </div>
   </div>
 </section>
@@ -579,6 +666,42 @@
   </div>
 </section>
 
+<!-- MOMENTS / GALLERY -->
+<section class="sec gallery" id="moments">
+  <div class="wrap">
+    <div class="sec-head gal-head reveal">
+      <div>
+        <span class="eyebrow">Moments</span>
+        <h2>Inside the sessions</h2>
+        <p>Living rooms, community halls and workplaces. Wherever people gather, healing follows.</p>
+      </div>
+      <div class="gal-nav">
+        <button class="gnav" id="galPrev" aria-label="Previous photo">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="gnav" id="galNext" aria-label="Next photo">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="rail" id="galRail" tabindex="0" aria-label="Photos from sessions, scroll horizontally">
+    <figure class="slide">
+      <img src="assets/g1.jpg" alt="A group healing session held in a home in the evening" loading="lazy" width="1200" height="800" />
+      <figcaption><b>Group healing circles</b><span>Small, intimate sessions in a calm, familiar space</span></figcaption>
+    </figure>
+    <figure class="slide">
+      <img src="assets/g2.jpg" alt="A community meditation session with participants seated in a sunlit room" loading="lazy" width="1200" height="800" />
+      <figcaption><b>Community meditation</b><span>Open to all ages, no experience needed</span></figcaption>
+    </figure>
+    <figure class="slide">
+      <img src="assets/g3.jpg" alt="A workplace meditation session with a team at their desks" loading="lazy" width="1200" height="800" />
+      <figcaption><b>Workplace sessions</b><span>Bringing calm and focus into the working day</span></figcaption>
+    </figure>
+  </div>
+  <p class="gal-hint">Swipe or drag to explore</p>
+</section>
+
 <!-- CONTACT -->
 <section class="sec" id="contact">
   <div class="wrap contact-grid contact">
@@ -589,7 +712,7 @@
       <div class="channels">
         <a class="ch" href="https://wa.me/919209557407?text=Hi%20Mamta%2C%20I%27d%20like%20to%20know%20more%20about%20a%20session." target="_blank" rel="noopener">
           <span class="chic"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.7 4.8-1.3A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-2.8.8.8-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-5.9c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-1.9-1.2 7.2 7.2 0 0 1-1.3-1.7c-.1-.2 0-.4.1-.5l.4-.5.3-.5v-.4c0-.1-.6-1.5-.8-2s-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c.6.3 1.1.4 1.5.6a3.6 3.6 0 0 0 1.6.1 2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg></span>
-          <div><b>WhatsApp</b><small>+91 92095 57407 — usually quickest</small></div>
+          <div><b>WhatsApp</b><small>+91 92095 57407 · usually quickest</small></div>
         </a>
         <a class="ch" href="tel:+919209557407">
           <span class="chic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
@@ -600,8 +723,8 @@
           <div><b>Instagram</b><small>@the_pranaspace</small></div>
         </a>
         <div class="ch" style="cursor:default">
-          <span class="chic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-          <div><b>Based in Pune, India</b><small>Sessions remote &amp; in-person</small></div>
+          <span class="chic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.6 5.6 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.6-3.6-9s1.2-6.4 3.6-9z"/></svg></span>
+          <div><b>Online &amp; in-person</b><small>Wherever you are, healing can reach you</small></div>
         </div>
       </div>
     </div>
@@ -621,9 +744,14 @@
           <select id="interest" name="interest">
             <option>Pranic Healing session</option>
             <option>Twin Hearts Meditation (community)</option>
-            <option>Super Brain Yoga</option>
             <option>Counselling</option>
-            <option>Not sure yet — guide me</option>
+            <option>Essential Oils / Aromatherapy</option>
+            <option>Crystal Healing</option>
+            <option>Breathwork</option>
+            <option>Cellular Healing</option>
+            <option>Ancestral Healing</option>
+            <option>Workplace / group session</option>
+            <option>Not sure yet, guide me</option>
           </select>
         </div>
         <div class="field">
@@ -649,7 +777,7 @@
           <img class="mark" src="assets/logo.jpg" alt="The Prana Space" style="width:46px;height:46px;border-radius:50%;object-fit:cover" />
           <span class="word">The <b>Prana</b> Space</span>
         </div>
-        <p>Holistic healing for mind, emotions and energy. A calmer, lighter, more aligned you — one session at a time.</p>
+        <p>Holistic healing for mind, emotions and energy. A calmer, lighter, more aligned you, one session at a time.</p>
       </div>
       <div>
         <h4>Explore</h4>
@@ -658,6 +786,7 @@
           <li><a href="#about">About Mamta</a></li>
           <li><a href="#sessions">Sessions</a></li>
           <li><a href="#stories">Stories</a></li>
+          <li><a href="#moments">Moments</a></li>
         </ul>
       </div>
       <div>
@@ -671,7 +800,7 @@
       </div>
     </div>
     <div class="disclaimer">
-      <span>© <span id="yr"></span> The Prana Space · Pune, India. Pranic Healing complements — and does not replace — medical or psychological care. Safe, non-touch &amp; suitable for all.</span>
+      <span>© <span id="yr"></span> The Prana Space · Pune, India. Pranic Healing complements, and does not replace, medical or psychological care. Safe, non-touch &amp; suitable for all.</span>
       <span class="tag">Heal within. Transform beyond.</span>
     </div>
   </div>
@@ -710,6 +839,55 @@
     io.observe(el);
   });
 
+  /* gallery: arrows + drag-to-scroll */
+  (function(){
+    const rail = document.getElementById('galRail');
+    if(!rail) return;
+    const prev = document.getElementById('galPrev'), next = document.getElementById('galNext');
+    const step = () => {
+      const s = rail.querySelector('.slide');
+      return s ? s.getBoundingClientRect().width + 20 : rail.clientWidth * .8;
+    };
+    const sync = () => {
+      const max = rail.scrollWidth - rail.clientWidth - 2;
+      if(prev) prev.disabled = rail.scrollLeft <= 2;
+      if(next) next.disabled = rail.scrollLeft >= max;
+    };
+    prev && prev.addEventListener('click', () => rail.scrollBy({left:-step(), behavior:'smooth'}));
+    next && next.addEventListener('click', () => rail.scrollBy({left: step(), behavior:'smooth'}));
+    rail.addEventListener('scroll', sync, {passive:true});
+    addEventListener('resize', sync);
+    sync();
+
+    // pointer drag (desktop); touch scrolling is native
+    let down=false, startX=0, startLeft=0, moved=0;
+    rail.addEventListener('pointerdown', e => {
+      if(e.pointerType === 'touch') return;
+      down=true; moved=0; startX=e.clientX; startLeft=rail.scrollLeft;
+      rail.classList.add('dragging'); rail.setPointerCapture(e.pointerId);
+    });
+    rail.addEventListener('pointermove', e => {
+      if(!down) return;
+      const dx = e.clientX - startX; moved = Math.abs(dx);
+      rail.scrollLeft = startLeft - dx;
+    });
+    const release = () => {
+      if(!down) return;
+      down=false; rail.classList.remove('dragging');
+      // settle onto the nearest slide
+      rail.scrollTo({left: Math.round(rail.scrollLeft/step())*step(), behavior:'smooth'});
+    };
+    rail.addEventListener('pointerup', release);
+    rail.addEventListener('pointercancel', release);
+    rail.addEventListener('click', e => { if(moved > 6) e.preventDefault(); }, true);
+
+    // keyboard
+    rail.addEventListener('keydown', e => {
+      if(e.key === 'ArrowRight'){ e.preventDefault(); rail.scrollBy({left: step(), behavior:'smooth'}); }
+      if(e.key === 'ArrowLeft'){ e.preventDefault(); rail.scrollBy({left:-step(), behavior:'smooth'}); }
+    });
+  })();
+
   /* contact form */
   const form = document.getElementById('contactForm');
   const msg = document.getElementById('formMsg');
@@ -731,7 +909,7 @@
           method:'POST', headers:{'Accept':'application/json'},
           body: new FormData(form)
         });
-        if (r.ok){ form.reset(); show('ok','Thank you, ' + name + '. Your message is on its way — I\u2019ll be in touch soon.'); }
+        if (r.ok){ form.reset(); show('ok','Thank you, ' + name + '. Your message is on its way. I\u2019ll be in touch soon.'); }
         else { throw new Error('bad'); }
       } catch(e){ show('err','Something went wrong. Please message on WhatsApp instead.'); }
       finally { btn.textContent = 'Send message'; btn.disabled = false; }
