@@ -291,10 +291,11 @@
   .slide.f-mid img{object-position:50% 38%}
   .slide.f-left img{object-position:0% 50%}
   .slide:hover img{transform:scale(1.03)}
-  .slide figcaption{position:absolute; left:0; right:0; bottom:0; padding:38px 22px 18px; color:#fff;
-    background:linear-gradient(180deg, transparent, rgba(28,17,44,.55) 42%, rgba(28,17,44,.86))}
-  .slide figcaption b{display:block; font-family:var(--serif); font-weight:500; font-size:1.12rem; letter-spacing:-.005em}
-  .slide figcaption span{display:block; font-size:.85rem; opacity:.85; margin-top:2px}
+  .slide figcaption{padding:16px 18px 18px; color:var(--ink); background:var(--card);
+    border-top:1px solid var(--line)}
+  .slide figcaption b{display:block; font-family:var(--serif); font-weight:500; font-size:1.08rem;
+    letter-spacing:-.005em; color:var(--plum)}
+  .slide figcaption span{display:block; font-size:.86rem; line-height:1.45; color:var(--muted); margin-top:3px}
   .gal-hint{text-align:center; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
     color:var(--muted); margin:22px 0 0}
   @media(max-width:920px){
@@ -305,7 +306,7 @@
     .rail{align-items:flex-start}
     .slide img{aspect-ratio:auto; height:auto; object-fit:contain; object-position:center}
     .slide:hover img{transform:none}
-    .slide figcaption{padding:30px 18px 14px}
+    .slide figcaption{padding:14px 16px 16px}
   }
 
   /* reveal */
@@ -325,6 +326,7 @@
     .quotes{grid-template-columns:repeat(2,1fr)}
     .contact-grid{grid-template-columns:1fr; gap:30px}
     .foot-grid{grid-template-columns:1fr 1fr}
+    .foot-grid > :first-child{grid-column:1 / -1}
     .navlinks{position:fixed; inset:74px 0 auto 0; flex-direction:column; gap:0; background:var(--ivory);
       border-bottom:1px solid var(--line); padding:8px 0 14px; transform:translateY(-130%); transition:transform .35s;
       box-shadow:0 24px 40px -28px rgba(42,26,64,.6)}
@@ -356,7 +358,10 @@
     .step h3{font-size:1.05rem}
     .step p{font-size:.85rem; line-height:1.5}
     /* helps & stories single column */
-    .help-grid{grid-template-columns:1fr} .quotes{grid-template-columns:1fr} .foot-grid{grid-template-columns:1fr}
+    .help-grid{grid-template-columns:1fr} .quotes{grid-template-columns:1fr}
+    .foot-grid{grid-template-columns:1fr 1fr; gap:28px 20px}
+    footer ul a{font-size:.86rem; line-height:1.45; display:inline-block}
+    footer h4{font-size:.72rem; letter-spacing:.08em}
     /* offers: tighten padding */
     .offer{padding:26px 22px 24px; gap:18px}
     .offer .oic{width:48px; height:48px}
@@ -794,7 +799,6 @@
           <li><a href="#about">About Mamta</a></li>
           <li><a href="#sessions">Sessions</a></li>
           <li><a href="#stories">Stories</a></li>
-          <li><a href="#moments">Moments</a></li>
         </ul>
       </div>
       <div>
