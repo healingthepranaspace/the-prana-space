@@ -1,7 +1,7 @@
 // The Prana Space — dashboard app helper.
 // Always loads the newest version from the internet; only if you're offline
 // does it show the last saved copy of the dashboard screen.
-const CACHE = 'prana-admin-v3';
+const CACHE = 'prana-admin-v4';
 const SHELL = ['/admin', '/config.js', '/admin/manifest.webmanifest', '/admin/icons/icon-192.png'];
 
 self.addEventListener('install', e => {
