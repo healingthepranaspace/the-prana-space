@@ -100,8 +100,8 @@ input::-webkit-date-and-time-value{text-align:left}
 .stat b.rose{color:#A8445E}
 .stat b.gold{color:#9A7428}
 .stat b.sage{color:#4F6F48}
-.stat span{display:block;margin-top:6px}
-.stat span{color:var(--muted);font-size:.88rem}
+.stat>span{display:block;margin-top:6px}
+.stat>span{color:var(--muted);font-size:.88rem}
 @media (max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
 .cols{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px}
 .cols>*{min-width:0}
@@ -268,6 +268,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
 .bnav .bl{font-size:.72rem;line-height:1.15;font-weight:600;text-align:center}
 .bnav button.on{color:#fff;border-top-color:var(--gold);background:rgba(255,255,255,.06)}
 .bnav button.on .bt{color:#E2C27A}
+.bnav .emo{font-size:1.2rem;filter:saturate(.9)}
 .bnav .bl-only{flex:1;display:flex;align-items:center;justify-content:center;font-size:.8rem;line-height:1.2;font-weight:600;text-align:center}
 .bnav button:focus-visible{outline:2px solid var(--gold);outline-offset:-4px}
 
@@ -286,6 +287,20 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
   .p-head .p-ctl{display:grid;grid-template-columns:auto 1fr;gap:8px;width:100%;justify-self:stretch}
   .p-ctl .btn{padding:9px 12px;font-size:.88rem;justify-content:center;white-space:normal;text-align:center}
 }
+
+/* hide / show amounts */
+:root{--mvs:.95rem}
+.stat b{--mvs:2.05rem}
+.eye{background:none;border:1px solid var(--line);border-radius:999px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--violet);flex:none;padding:0}
+.eye:hover{background:var(--mist-2)}
+.eye svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.eye .ec{display:none}
+body.money-hidden .eye .eo{display:none}
+body.money-hidden .eye .ec{display:block}
+body.money-hidden .mv{font-size:0;letter-spacing:0}
+.mv{white-space:nowrap}
+body.money-hidden .mv::after{content:"₹ ••••";font-size:var(--mvs);letter-spacing:.06em;white-space:nowrap}
+@media (max-width:640px){.stat b{--mvs:1.6rem}}
 </style>
 </head>
 <body>
@@ -318,7 +333,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
       <div class="install-tip hidden" id="iosTip"><span style="font-size:1.4rem">📲</span><div class="grow"><b>Add this dashboard to your Home Screen</b><br>Tap the Share button <b>⬆</b> in Safari, then <b>Add to Home Screen</b>.</div><button class="btn-danger" id="iosTipX" aria-label="Dismiss">✕</button></div>
       <div class="stats">
         <div class="stat"><b id="s-today">0</b><span>Healings today</span></div>
-        <div class="stat"><b id="s-week">0</b><span>Healings in the next 7 days</span></div>
+        <div class="stat"><b id="s-week">0</b><span>Healings (next 7 days)</span></div>
         <div class="stat"><b id="s-active">0</b><span>Active patients</span></div>
         <div class="stat"><b id="s-new">0</b><span>New intakes this week</span></div>
       </div>
@@ -327,7 +342,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
         <div class="panel"><h2>New intake forms</h2><div id="recent"></div></div>
       </div>
       <div class="panel" style="margin-top:22px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0;margin-right:auto">Energy Exchange</h2><button class="link" data-goto="money">View all ›</button></div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Energy Exchange</h2><button type="button" class="eye" data-eye aria-label="Show or hide amounts"><svg class="eo" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ec" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button><button class="link" data-goto="money" style="margin-left:auto">View all ›</button></div>
         <div class="stats" style="margin-bottom:14px">
           <div class="stat"><b id="o-month">₹0</b><span>Received this month</span></div>
           <div class="stat"><b id="o-all">₹0</b><span>Total received</span></div>
@@ -347,7 +362,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
       <div class="stats">
         <div class="stat"><b id="ps-total">0</b><span>Total patients</span></div>
         <div class="stat"><b id="ps-active" class="sage">0</b><span>Active</span></div>
-        <div class="stat"><b id="ps-month" class="gold">0</b><span>New this month</span></div>
+        <div class="stat"><b id="ps-month" class="gold">0</b><span>New This Month</span></div>
         <div class="stat"><b id="ps-week">0</b><span>New This Week</span></div>
       </div>
       <div class="filters">
@@ -383,7 +398,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
 
     <!-- ENERGY EXCHANGE -->
     <section id="v-money" class="hidden">
-      <div class="page-h"><h1>Energy Exchange</h1></div>
+      <div class="page-h"><h1 style="flex:none;margin-right:0">Energy Exchange</h1><button type="button" class="eye" data-eye aria-label="Show or hide amounts"><svg class="eo" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ec" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button></div>
       <div class="stats">
         <div class="stat"><b id="m-all" class="num">₹0</b><span>Total received</span></div>
         <div class="stat"><b id="m-month" class="num">₹0</b><span>Received this month</span></div>
@@ -395,7 +410,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
         <select id="mf" aria-label="Show"><option value="">All patients</option><option value="due">With pending</option><option value="paid">Fully paid</option><option value="over">Overpaid</option><option value="unset">Fees not set</option></select>
       </div>
       <div class="tbl-wrap" style="margin-bottom:26px"><table>
-        <thead><tr><th>Patient</th><th>Case fees</th><th>Received</th><th>Pending</th><th>Last payment</th><th></th></tr></thead>
+        <thead><tr><th>Patient</th><th>Case fees</th><th>Received</th><th>Pending</th><th style="white-space:nowrap">Last payment</th><th></th><th></th></tr></thead>
         <tbody id="mtable"></tbody>
       </table></div>
       <h2 style="font-size:1.5rem;margin-bottom:10px">Recent payments</h2>
@@ -414,7 +429,7 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
       <button data-view="home" class="on"><span class="bt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c1.8 2 2.7 4.3 2.7 6.6S13.8 15 12 17c-1.8-2-2.7-4.1-2.7-6.4S10.2 6 12 4z"/><path d="M12 17c-2.4-.2-4.6-1.2-6.2-3.1C5 12 5 10.4 5.3 9c2 .3 3.7 1.1 5 2.4"/><path d="M12 17c2.4-.2 4.6-1.2 6.2-3.1.8-1.9.8-3.5.5-4.9-2 .3-3.7 1.1-5 2.4"/><path d="M4 19.5h16"/></svg></span><span class="bl">Overview</span></button>
       <button data-view="patients"><span class="bt" id="nav-p">0</span><span class="bl">Patients</span></button>
       <button data-view="healings"><span class="bt" id="nav-h">0</span><span class="bl">Healings Today</span></button>
-      <button data-view="money"><span class="bl-only">Energy<br>Exchange</span></button>
+      <button data-view="money"><span class="bt emo" aria-hidden="true">💵</span><span class="bl">Energy<br>Exchange</span></button>
     </div>
   </nav>
 </div>
@@ -594,12 +609,12 @@ function renderHome(){
 
   // energy exchange snapshot
   const L=S.patients.map(p=>({p,...ledger(p)})), month=t.slice(0,7);
-  $('#o-month').textContent=money(S.payments.filter(x=>x.paid_on.slice(0,7)===month).reduce((a,x)=>a+Number(x.amount),0));
-  $('#o-all').textContent=money(S.payments.reduce((a,x)=>a+Number(x.amount),0));
-  $('#o-due').textContent=money(L.reduce((a,r)=>a+r.due,0));
+  $('#o-month').innerHTML=mv(S.payments.filter(x=>x.paid_on.slice(0,7)===month).reduce((a,x)=>a+Number(x.amount),0));
+  $('#o-all').innerHTML=mv(S.payments.reduce((a,x)=>a+Number(x.amount),0));
+  $('#o-due').innerHTML=mv(L.reduce((a,r)=>a+r.due,0));
   $('#o-duen').textContent=L.filter(r=>r.due>0).length;
   const dl=L.filter(r=>r.due>0).sort((a,b)=>b.due-a.due).slice(0,5);
-  $('#o-duelist').innerHTML = dl.length ? `<div class="day-h" style="margin-top:0">Pending</div>`+dl.map(({p,due})=>`<div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button><small class="num" style="color:var(--rose)">${money(due)} pending</small></div>
+  $('#o-duelist').innerHTML = dl.length ? `<div class="day-h" style="margin-top:0">Pending</div>`+dl.map(({p,due})=>`<div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button><small class="num" style="color:var(--rose)">${mv(due)} pending</small></div>
       <a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${reminderLink(p,due)}">Remind</a></div>`).join('')
     : '<div class="empty" style="padding:6px 0">No pending energy exchange. 🌿</div>';
 }
@@ -893,6 +908,7 @@ function ledger(p){
   const last=pays.map(x=>x.paid_on).sort().pop()||null;
   return {paid,fee,due,over,last};
 }
+const mv = a => `<span class="mv">${money(a)}</span>`;
 const reminderLink=(p,due)=>waLink(p.whatsapp,`Hi ${p.full_name.split(' ')[0]}, a gentle reminder that ${money(due)} is pending as your energy exchange for your healing sessions at The Prana Space. Thank you 🙏`);
 function feeModal(p, after){
   openModal('Case fees · '+esc(p.full_name),`<div class="fld"><label for="fee">Total case fees (₹)</label><input type="number" inputmode="numeric" id="fee" min="0" step="1" value="${p.case_fees??''}"></div>`,
@@ -926,26 +942,25 @@ function renderMoney(){
   const thisMonth=S.payments.filter(x=>x.paid_on.slice(0,7)===month).reduce((a,x)=>a+Number(x.amount),0);
   const rows=S.patients.map(p=>({p,...ledger(p)}));
   const dueRows=rows.filter(r=>r.due>0);
-  $('#m-all').textContent=money(total); $('#m-month').textContent=money(thisMonth);
-  $('#m-due').textContent=money(dueRows.reduce((a,r)=>a+r.due,0)); $('#m-duen').textContent=dueRows.length;
+  $('#m-all').innerHTML=mv(total); $('#m-month').innerHTML=mv(thisMonth);
+  $('#m-due').innerHTML=mv(dueRows.reduce((a,r)=>a+r.due,0)); $('#m-duen').textContent=dueRows.length;
   const q=$('#mq').value.trim().toLowerCase(), f=$('#mf').value;
   const list=rows.filter(r=>(!q||r.p.full_name.toLowerCase().includes(q)) &&
     (!f || (f==='due'&&r.due>0) || (f==='paid'&&r.fee!=null&&r.due===0&&r.over===0) || (f==='over'&&r.over>0) || (f==='unset'&&r.fee==null)))
     .sort((a,b)=>b.due-a.due || a.p.full_name.localeCompare(b.p.full_name));
   $('#mtable').innerHTML = list.length ? list.map(({p,paid,fee,due,over,last})=>`<tr>
     <td><div class="who">${avatar(p)}<button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button></div></td>
-    <td class="num">${fee==null?`<button class="link" data-fee="${p.id}" style="font-weight:500">Set fees</button>`:money(fee)}</td>
-    <td class="num">${money(paid)}</td>
-    <td class="num ${due>0?'due-cell':over>0?'over-cell':fee!=null?'paid-cell':''}">${fee==null?'—':due>0?money(due):over>0?`Overpaid ${money(over)}`:'Paid ✓'}</td>
-    <td>${last?fmtDate(last):'—'}</td>
-    <td><div style="display:flex;gap:6px;justify-content:flex-end;flex-wrap:wrap">
-      ${due>0?`<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${reminderLink(p,due)}">Remind</a>`:''}
-      <button class="btn btn-o btn-sm" data-pay="${p.id}">Record payment</button></div></td></tr>`).join('')
-    : `<tr><td colspan="6" class="empty">${S.patients.length?'No patients match.':'No patients yet.'}</td></tr>`;
+    <td class="num">${fee==null?`<button class="link" data-fee="${p.id}" style="font-weight:500">Set fees</button>`:mv(fee)}</td>
+    <td class="num">${mv(paid)}</td>
+    <td class="num ${due>0?'due-cell':over>0?'over-cell':fee!=null?'paid-cell':''}">${fee==null?'—':due>0?mv(due):over>0?`Overpaid ${mv(over)}`:'Paid ✓'}</td>
+    <td style="white-space:nowrap">${last?fmtDate(last):'—'}</td>
+    <td style="text-align:right"><button class="btn btn-o btn-sm" data-pay="${p.id}">Record payment</button></td>
+    <td style="text-align:right">${due>0?`<a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${reminderLink(p,due)}">Remind</a>`:''}</td></tr>`).join('')
+    : `<tr><td colspan="7" class="empty">${S.patients.length?'No patients match.':'No patients yet.'}</td></tr>`;
   const recent=S.payments.slice().sort((a,b)=>b.paid_on.localeCompare(a.paid_on)).slice(0,15);
   $('#mrecent').innerHTML = recent.length ? recent.map(x=>{const p=pById(x.patient_id); return `<tr><td>${fmtDate(x.paid_on)}</td>
     <td>${p?`<button class="link" data-act="open" data-id="${p.id}">${esc(p.full_name)}</button>`:'—'}</td>
-    <td class="num"><b>${money(x.amount)}</b></td><td>${esc(x.mode||'—')}</td>
+    <td class="num"><b>${mv(x.amount)}</b></td><td>${esc(x.mode||'—')}</td>
     <td>${p?`<button class="btn btn-o btn-sm" data-pe="${x.id}">Edit</button>`:''}</td></tr>`;}).join('')
     : '<tr><td colspan="5" class="empty">No payments recorded yet.</td></tr>';
   $$('#mrecent [data-pe]').forEach(b=>{ const x=S.payments.find(y=>y.id===b.dataset.pe); b.onclick=()=>paymentModal(pById(x.patient_id), renderMoney, x); });
@@ -953,6 +968,14 @@ function renderMoney(){
   $$('[data-fee]').forEach(b=>b.onclick=()=>feeModal(pById(b.dataset.fee), renderMoney));
 }
 ['mq','mf'].forEach(id=>$('#'+id).addEventListener('input',renderMoney));
+
+// Show / hide amounts — remembered on this device
+(function(){
+  let hide=true; try{ hide=localStorage.getItem('pranaHideMoney')!=='0'; }catch(e){}
+  const apply=()=>{ document.body.classList.toggle('money-hidden',hide); $$('[data-eye]').forEach(b=>{ b.setAttribute('aria-pressed',String(!hide)); b.title=hide?'Show amounts':'Hide amounts'; }); };
+  document.addEventListener('click',e=>{ if(!e.target.closest('[data-eye]')) return; hide=!hide; try{ localStorage.setItem('pranaHideMoney',hide?'1':'0'); }catch(e){} apply(); });
+  apply();
+})();
 
 /* =====================================================================
    SHARE PROGRESS REPORT
