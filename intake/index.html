@@ -18,12 +18,12 @@
   --serif:"Cormorant Garamond",Georgia,serif; --sans:"Figtree",system-ui,-apple-system,sans-serif;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
 body{margin:0;background:var(--ivory);color:var(--ink);font:16px/1.55 var(--sans);
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 .wrap{max-width:640px;margin:0 auto;padding:28px 20px 64px}
 header{text-align:center;margin-bottom:28px}
-header img{width:84px;height:84px;border-radius:50%}
+header img{width:120px;height:120px;object-fit:contain;mix-blend-mode:multiply}
 h1{font:600 2.3rem/1.1 var(--serif);color:var(--violet);margin:14px 0 8px}
 .lede{color:var(--muted);max-width:30rem;margin:0 auto}
 .note{background:var(--gold-soft);border-radius:14px;padding:14px 16px;font-size:.92rem;color:#5a4a2a;margin:22px 0 0}
@@ -45,6 +45,10 @@ input[type=text],input[type=email],input[type=tel],input[type=date],select,texta
   width:100%;font:inherit;color:inherit;padding:12px 14px;border:1px solid var(--line);
   border-radius:12px;background:#fff;outline:none;transition:border-color .2s, box-shadow .2s}
 textarea{min-height:96px;resize:vertical}
+input[type=date]{min-width:0;max-width:100%;display:block;min-height:48px}
+@supports (-webkit-touch-callout:none){input[type=date]{-webkit-appearance:none;appearance:none;text-align:left;line-height:1.4}}
+input::-webkit-date-and-time-value{text-align:left}
+.row2>*{min-width:0}
 input:focus,select:focus,textarea:focus{border-color:var(--violet-2);box-shadow:0 0 0 3px rgba(91,63,140,.15)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media (max-width:520px){.row2{grid-template-columns:1fr}}
@@ -161,8 +165,8 @@ footer a{color:var(--violet-2)}
           <input type="text" id="occupation">
         </div>
         <div class="field">
-          <label class="lbl" for="address">City / address</label>
-          <textarea id="address" rows="2" style="min-height:64px"></textarea>
+          <label class="lbl" for="address">City</label>
+          <input type="text" id="address" autocomplete="address-level2" placeholder="e.g. Pune">
         </div>
       </section>
 
@@ -262,7 +266,7 @@ footer a{color:var(--violet-2)}
     <a class="btn" id="waLink" target="_blank" rel="noopener">Message Mamta on WhatsApp</a>
   </div>
 
-  <footer>The Prana Space · Pune · <a href="/">thepranaspace.com</a></footer>
+  <footer>The Prana Space · <a href="/">thepranaspace.com</a></footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
