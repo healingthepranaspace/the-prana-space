@@ -43,8 +43,31 @@ th:first-child{background:var(--mist-2)}
 .e-Depleted,.a-Under{background:var(--sky-soft);color:#2f5680}
 .cmt{border-left:3px solid var(--gold);padding:4px 0 4px 14px;margin:0 0 14px}.cmt p{margin:0 0 4px}.cmt small{color:var(--muted)}
 .note{background:var(--gold-soft);color:#5a4a2a;border-radius:14px;padding:14px 16px;font-size:.9rem}
-.cta{text-align:center;margin-top:26px}
-.cta a{display:inline-block;background:#25D366;color:#fff;text-decoration:none;font-weight:600;padding:12px 24px;border-radius:999px}
+.cta{display:flex;gap:10px;justify-content:center;margin:26px auto 0;max-width:480px}
+.cta a,.cta button{flex:1 1 0;min-width:0;text-align:center;line-height:1.25;display:inline-flex;align-items:center;justify-content:center;font:600 1rem var(--sans);padding:12px 10px;border-radius:999px;cursor:pointer;text-decoration:none;border:0}
+.cta a{background:#25D366;color:#fff}
+.cta button{background:var(--violet);color:#fff}
+.cta button[aria-expanded=true]{background:#fff;color:var(--violet);border:1.5px solid var(--violet)}
+#fb{margin-top:18px}
+.fbs{border-bottom:1px solid var(--line);padding:12px 0}
+.fbs:last-of-type{border-bottom:0}
+.fbs-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.fbs-top small{color:var(--muted);white-space:nowrap}
+.rng{display:flex;align-items:center;gap:12px;margin-top:8px}
+.rng input{flex:1;accent-color:var(--gold);height:28px}
+.rng output{min-width:2.4em;text-align:center;font:600 1.15rem var(--num);color:var(--violet)}
+.ends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted)}
+.imp{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:8px}
+.imp label{position:relative}.imp input{position:absolute;opacity:0}
+.imp span{display:flex;align-items:center;justify-content:center;height:40px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-weight:600;background:#fff}
+.imp input:checked+span{background:var(--gold);border-color:var(--gold);color:#fff}
+.imp input:focus-visible+span{box-shadow:0 0 0 3px rgba(91,63,140,.3)}
+.lbl{font-weight:600;display:block}
+textarea{width:100%;font:16px/1.5 var(--sans);padding:12px 14px;border:1px solid var(--line);border-radius:12px;min-height:90px;resize:vertical;margin-top:8px;box-sizing:border-box}
+.send{display:block;width:100%;margin-top:16px;background:var(--violet);color:#fff;border:0;font:600 1rem var(--sans);padding:14px;border-radius:999px;cursor:pointer}
+.send:disabled{opacity:.6}
+.fb-err{color:#8b3348;background:var(--rose-soft);padding:10px 12px;border-radius:10px;margin-top:10px;font-size:.9rem;display:none}
+.thanks{text-align:center;padding:20px 10px}
 .msg{text-align:center;padding:60px 20px;color:var(--muted)}
 footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:28px}
 footer a{color:var(--violet-2)}
@@ -75,9 +98,9 @@ footer a{color:var(--violet-2)}
   const fail=m=>{ sub.textContent=''; out.innerHTML=`<div class="msg">${m}</div>`; };
   const token=new URLSearchParams(location.search).get('t');
   if(!token) return fail('This report link is incomplete. Please ask Mamta for a new link.');
-  let data;
+  let data, sb;
   try{
-    const sb=window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY);
+    sb=window.supabase.createClient(C.SUPABASE_URL,C.SUPABASE_ANON_KEY);
     const r=await sb.rpc('get_shared_report',{p_token:token});
     if(r.error) throw r.error; data=r.data;
   }catch(e){ console.error(e); return fail('This report couldn\'t load. Check your internet connection and try again.'); }
@@ -108,7 +131,43 @@ footer a{color:var(--violet-2)}
       </tbody></table></div></div>`:`<div class="panel msg" style="padding:30px">Your scan results will appear here after your first energy scan.</div>`}
     ${(data.comments||[]).length?`<div class="panel"><h2>Notes from Mamta</h2>${data.comments.map(c=>`<div class="cmt"><p>${esc(c.text).replace(/\n/g,'<br>')}</p>${c.date?`<small>${fmt(c.date)}</small>`:''}</div>`).join('')}</div>`:''}
     <p class="note">🌿 Pranic Healing works alongside medical care, not in place of it. Please keep following any treatment your doctor has advised.</p>
-    <div class="cta"><a href="https://wa.me/${esc(C.WHATSAPP)}?text=${encodeURIComponent(`Hi Mamta, I've seen my progress report. I'd like to book my next session.`)}" target="_blank" rel="noopener">Book your next session</a></div>`;
+    <div class="cta"><a href="https://wa.me/${esc(C.WHATSAPP)}?text=${encodeURIComponent(`Hi Mamta, I've seen my progress report. I'd like to book my next session.`)}" target="_blank" rel="noopener">Book your next session</a>
+      <button type="button" id="fbBtn" aria-expanded="false" aria-controls="fb">Send feedback</button></div>
+    <div class="panel" id="fb" hidden>
+      <h2>How are you feeling now?</h2>
+      <p style="margin:-4px 0 6px;color:var(--muted)">Your answers go only to Mamta and help her plan your next healing.</p>
+      ${(data.symptoms||[]).length?`<div style="margin-top:14px"><span class="lbl">Your symptoms today</span><span style="font-size:.88rem;color:var(--muted)">0 = gone, 10 = severe</span>
+        ${data.symptoms.map((x,i)=>`<div class="fbs"><div class="fbs-top"><b>${esc(x.name)}</b><small>When you started: ${x.intensity??'—'}/10</small></div>
+          <div class="rng"><input type="range" min="0" max="10" value="${x.intensity??5}" data-sym="${i}" aria-label="${esc(x.name)} now"><output>${x.intensity??5}</output></div>
+          <div class="ends"><span>Gone</span><span>Severe</span></div></div>`).join('')}</div>`:''}
+      <div style="margin-top:18px"><span class="lbl">Overall, how much is this affecting your daily energy and peace of mind now?</span>
+        ${data.impact_score?`<span style="font-size:.88rem;color:var(--muted)">When you started: ${data.impact_score}/10</span>`:''}
+        <div class="imp" role="radiogroup" aria-label="Impact from 1 to 10">${[...Array(10)].map((_,i)=>`<label><input type="radio" name="imp" value="${i+1}"><span>${i+1}</span></label>`).join('')}</div>
+        <div class="ends" style="margin-top:4px"><span>Barely</span><span>Overwhelming</span></div></div>
+      <div style="margin-top:18px"><label class="lbl" for="fbNote">Anything you'd like to share with Mamta? (optional)</label>
+        <textarea id="fbNote" maxlength="2000" placeholder="e.g. Sleeping better, still some tension in the shoulders"></textarea></div>
+      <button type="button" class="send" id="fbSend">Send to Mamta</button>
+      <div class="fb-err" id="fbErr" role="alert"></div>
+    </div>`;
+
+  // ---- feedback ----
+  const fbBox=document.getElementById('fb'), fbBtn=document.getElementById('fbBtn');
+  fbBtn.onclick=()=>{ const open=fbBox.hidden; fbBox.hidden=!open; fbBtn.setAttribute('aria-expanded',String(open)); fbBtn.textContent=open?'Close feedback':'Send feedback'; if(open) fbBox.scrollIntoView({behavior:'smooth',block:'start'}); };
+  fbBox.querySelectorAll('input[type=range]').forEach(r=>r.addEventListener('input',()=>{ r.nextElementSibling.textContent=r.value; }));
+  document.getElementById('fbSend').onclick=async()=>{
+    const btn=document.getElementById('fbSend'), err=document.getElementById('fbErr');
+    const syms=[...fbBox.querySelectorAll('[data-sym]')].map(r=>({name:data.symptoms[+r.dataset.sym].name, now:+r.value}));
+    const imp=fbBox.querySelector('input[name=imp]:checked');
+    const note=document.getElementById('fbNote').value.trim();
+    if(!syms.length && !imp && !note){ err.textContent='Please answer at least one question.'; err.style.display='block'; return; }
+    btn.disabled=true; btn.textContent='Sending…'; err.style.display='none';
+    const { error } = await sb.rpc('submit_feedback',{p_token:token, p_symptoms:syms, p_impact:imp?+imp.value:null, p_note:note||null});
+    if(error){ console.error(error); btn.disabled=false; btn.textContent='Send to Mamta';
+      err.textContent=/Too many/i.test(error.message)?'You\'ve already sent feedback several times today. Please try again tomorrow.':'Your feedback couldn\'t be sent. Please check your connection and try again.';
+      err.style.display='block'; return; }
+    fbBox.innerHTML=`<div class="thanks"><div style="font-size:2.2rem">🙏</div><h2>Thank you, ${esc(data.first_name)}</h2><p style="color:var(--muted);margin:0">Mamta has received your feedback.</p></div>`;
+    fbBtn.remove();
+  };
 
   if(scans.length){
     const inch=(v,u)=>v==null?null:+(v*(TO_IN[u]||1)).toFixed(1);

@@ -30,8 +30,11 @@ h1{font:600 2.3rem/1.1 var(--serif);color:var(--violet);margin:14px 0 8px}
 
 /* progress: the form really is a sequence */
 .steps{display:flex;gap:8px;margin:30px 0 8px}
-.steps span{flex:1;height:4px;border-radius:4px;background:var(--line);transition:background .3s}
-.steps span.on{background:var(--gold)}
+.st-i{flex:1;min-width:0}
+.st-i span{display:block;height:4px;border-radius:4px;background:var(--line);transition:background .3s}
+.st-i.on span{background:var(--gold)}
+.st-i em{display:block;font-style:normal;font-size:.76rem;line-height:1.25;color:var(--muted);margin-top:7px}
+.st-i.cur em{color:var(--violet);font-weight:600}
 .step-label{font-size:.85rem;color:var(--muted);margin-bottom:18px}
 
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px 22px}
@@ -123,7 +126,7 @@ footer a{color:var(--violet-2)}
   </header>
 
   <div id="formArea">
-    <div class="steps" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
+    <div class="steps" aria-hidden="true"><div class="st-i on cur"><span></span><em>About you</em></div><div class="st-i"><span></span><em>What brings you</em></div><div class="st-i"><span></span><em>Your health</em></div><div class="st-i"><span></span><em>Almost done</em></div></div>
     <div class="step-label" id="stepLabel">Step 1 of 4</div>
 
     <form id="intake" novalidate>
@@ -358,7 +361,7 @@ footer a{color:var(--violet-2)}
   function show(n){
     step=n;
     $$('.step').forEach(s=>s.classList.toggle('active', +s.dataset.step===n));
-    $$('.steps span').forEach((s,i)=>s.classList.toggle('on', i<n));
+    $$('.st-i').forEach((s,i)=>{ s.classList.toggle('on', i<n); s.classList.toggle('cur', i===n-1); });
     $('#stepLabel').textContent = `Step ${n} of ${TOTAL}`;
     $('#back').style.visibility = n>1?'visible':'hidden';
     $('#next').textContent = n===TOTAL ? 'Send to Mamta' : 'Continue';

@@ -73,6 +73,8 @@ main{max-width:1180px;margin:0 auto;padding:26px 20px calc(110px + env(safe-area
 .btn-wa{background:#25D366;color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .btn-sm{padding:6px 12px;font-size:.86rem}
+.btn-stop{background:#fff;border:1.5px solid var(--rose);color:var(--rose)}
+.btn-stop:hover{background:var(--rose-soft)}
 .btn-danger{background:none;border:0;color:var(--rose);cursor:pointer;font-weight:500;padding:6px}
 .btn:disabled{opacity:.55;cursor:wait}
 .btn:focus-visible,.link:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
@@ -159,6 +161,7 @@ select.st{padding:4px 8px;width:auto;cursor:pointer}
 .p-ctl select{width:auto}
 .tabs{display:flex;gap:4px;margin:22px 0 16px;border-bottom:1px solid var(--line);overflow-x:auto}
 .tabs button{background:none;border:0;padding:10px 16px;cursor:pointer;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tabs .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gold);vertical-align:middle;margin-left:2px}
 .tabs button.on{color:var(--violet);border-bottom-color:var(--gold)}
 .dl{display:grid;grid-template-columns:200px 1fr;gap:0;background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden}
 .dl dt,.dl dd{padding:12px 16px;margin:0;border-bottom:1px solid var(--line)}
@@ -289,18 +292,29 @@ dialog::backdrop{background:rgba(35,20,60,.45)}
 }
 
 /* hide / show amounts */
-:root{--mvs:.95rem}
-.stat b{--mvs:2.05rem}
 .eye{background:none;border:1px solid var(--line);border-radius:999px;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--violet);flex:none;padding:0}
 .eye:hover{background:var(--mist-2)}
 .eye svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .eye .ec{display:none}
 body.money-hidden .eye .eo{display:none}
 body.money-hidden .eye .ec{display:block}
-body.money-hidden .mv{font-size:0;letter-spacing:0}
+body.money-hidden .mv-r{display:none}
+.mv-m{display:none}
+body.money-hidden .mv-m{display:inline}
+#v-money th{white-space:nowrap}
+#mtable td.num,#mrecent td.num{min-width:6.8em;white-space:nowrap}
 .mv{white-space:nowrap}
-body.money-hidden .mv::after{content:"₹ ••••";font-size:var(--mvs);letter-spacing:.06em;white-space:nowrap}
-@media (max-width:640px){.stat b{--mvs:1.6rem}}
+
+.fb{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:#FDFCFF}
+.fb-h{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.fb-t{min-width:0;width:100%;border-collapse:collapse}
+.fb-t th,.fb-t td{padding:6px 8px;border-bottom:1px solid var(--line);font-size:.9rem;text-align:left;background:none}
+.fb-t th{font-size:.78rem;color:var(--muted)}
+.fb-good{color:var(--sage);font-weight:600;white-space:nowrap}
+.fb-bad{color:var(--rose);font-weight:600;white-space:nowrap}
+.fb-same{color:var(--muted);white-space:nowrap}
+.fb-imp{margin-top:8px;font-size:.92rem}
+.fb-note{margin-top:8px;border-left:3px solid var(--gold);padding:2px 0 2px 12px;font-style:italic;color:#433a52;white-space:pre-wrap}
 </style>
 </head>
 <body>
@@ -341,6 +355,7 @@ body.money-hidden .mv::after{content:"₹ ••••";font-size:var(--mvs);let
         <div class="panel"><h2>Upcoming healings</h2><div id="upcoming"></div></div>
         <div class="panel"><h2>New intake forms</h2><div id="recent"></div></div>
       </div>
+      <div class="panel hidden" id="fbPanel" style="margin-top:22px"><h2>New feedback 💬</h2><div id="fbList"></div></div>
       <div class="panel" style="margin-top:22px">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><h2 style="margin:0">Energy Exchange</h2><button type="button" class="eye" data-eye aria-label="Show or hide amounts"><svg class="eo" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="ec" viewBox="0 0 24 24"><path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.1M6.6 6.6C3.8 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button><button class="link" data-goto="money" style="margin-left:auto">View all ›</button></div>
         <div class="stats" style="margin-bottom:14px">
@@ -534,16 +549,18 @@ async function enter(){
    DATA
    ===================================================================== */
 async function loadAll(){
-  const [p,h,pay] = await Promise.all([
+  const [p,h,pay,fb] = await Promise.all([
     sb.from('patients').select('*').order('created_at',{ascending:false}),
     sb.from('healings').select('*').order('healing_date').order('healing_time',{nullsFirst:true}),
-    sb.from('payments').select('*').order('paid_on',{ascending:false})
+    sb.from('payments').select('*').order('paid_on',{ascending:false}),
+    sb.from('feedback').select('id,patient_id,created_at').eq('seen',false).order('created_at',{ascending:false})
   ]);
   if(p.error){
     if(/permission|policy|row-level/i.test(p.error.message)) toast('This login is not on the admin list. Add the email in Supabase.');
     else fail(p.error);
   }
   S.patients = p.data||[]; S.healings = (h.data||[]).sort((a,b)=>(a.healing_date+(a.healing_time||'')).localeCompare(b.healing_date+(b.healing_time||''))) ; S.payments = pay.data||[];
+  S.unseen = fb.error ? [] : (fb.data||[]);
   await loadPhotos();
 }
 async function loadPhotos(){
@@ -606,6 +623,10 @@ function renderHome(){
       ${p.created_at.slice(0,10)>=wkAgo?'<span class="tag new">New</span>':''}</div>`).join('')
     : '<div class="empty">No forms yet. Share the intake link with new patients.</div>';
   bindHealRows($('#upcoming'));
+  const fbs=(S.unseen||[]).filter(f=>pById(f.patient_id));
+  $('#fbPanel').classList.toggle('hidden',!fbs.length);
+  $('#fbList').innerHTML = fbs.slice(0,8).map(f=>{const p=pById(f.patient_id); return `<div class="row-item">${avatar(p)}<div class="grow"><button class="link" data-fb="${p.id}">${esc(p.full_name)}</button><small>Sent feedback · ${fmtDate(f.created_at)}</small></div><span class="tag new">New</span></div>`;}).join('');
+  $$('[data-fb]').forEach(b=>b.onclick=()=>{ S.tab='progress'; S.current=null; openPatient(b.dataset.fb).then(()=>{ S.tab='progress'; renderPatient(); }); });
 
   // energy exchange snapshot
   const L=S.patients.map(p=>({p,...ledger(p)})), month=t.slice(0,7);
@@ -697,9 +718,12 @@ async function openPatient(id){
   ['home','patients','healings','money'].forEach(v=>$('#v-'+v).classList.add('hidden'));
   $('#v-patient').classList.remove('hidden'); S.view='patient';
   $$('.bnav button').forEach(b=>b.classList.toggle('on', b.dataset.view==='patients')); updateNav();
-  const { data, error } = await sb.from('scans').select('*').eq('patient_id',id).order('scan_date',{ascending:false});
-  if(error) fail(error);
-  p._scans = data||[];
+  const [sc, fbk] = await Promise.all([
+    sb.from('scans').select('*').eq('patient_id',id).order('scan_date',{ascending:false}),
+    sb.from('feedback').select('*').eq('patient_id',id).order('created_at',{ascending:false})
+  ]);
+  if(sc.error) fail(sc.error);
+  p._scans = sc.data||[]; p._feedback = fbk.error ? [] : (fbk.data||[]);
   renderPatient(); window.scrollTo(0,0);
 }
 function renderPatient(){
@@ -723,7 +747,7 @@ function renderPatient(){
       </div>
     </div>
     <div class="tabs" role="tablist">
-      ${[['profile','Profile'],['scans',`Scans (${p._scans.length})`],['healings',`Healings (${S.healings.filter(h=>h.patient_id===p.id).length})`],['progress','Progress'],['fees','Energy exchange']]
+      ${[['profile','Profile'],['scans',`Scans (${p._scans.length})`],['healings',`Healings (${S.healings.filter(h=>h.patient_id===p.id).length})`],['progress',`Progress${(S.unseen||[]).some(f=>f.patient_id===p.id)?' <span class="dot"></span>':''}`],['fees','Energy exchange']]
         .map(([k,l])=>`<button role="tab" data-tab="${k}" class="${S.tab===k?'on':''}">${l}</button>`).join('')}
     </div>
     <div id="ptab"></div>`;
@@ -835,6 +859,7 @@ function tabProgress(p){
       <tr><td><b>Balanced chakras</b></td>${scans.map(s=>`<td><b>${normalCount(s)} / 14</b></td>`).join('')}</tr>
       </tbody></table></div></div>`
     : '<div class="panel empty">Charts appear here once you record scans. Two or more scans show the change over time.</div>'}
+    <div class="panel" style="margin-top:18px"><h2>Patient feedback</h2>${feedbackHTML(p)}</div>
     <div class="panel" style="margin-top:18px"><h2>Healer's comments</h2>
       <p style="margin:-4px 0 12px;color:var(--muted);font-size:.9rem">Add up to 5 comments about ${esc(p.full_name.split(' ')[0])}'s progress.</p>
       <div id="cmts">${comments.map((c,i)=>cmtRow(c,i)).join('')}</div>
@@ -865,6 +890,21 @@ function tabProgress(p){
       {label:'Balanced chakras (of 14)',data:scans.map(normalCount),borderColor:'#5F7F5B',backgroundColor:'#5F7F5B',borderDash:[5,4],tension:.3,yAxisID:'y1'}]},
     options:{maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'bottom',labels:{font:{family:'Figtree'}}}},
       scales:{y:{title:{display:true,text:'Inches'},beginAtZero:true},y1:{position:'right',min:0,max:14,grid:{drawOnChartArea:false},title:{display:true,text:'Balanced chakras'}}}}});
+}
+function feedbackHTML(p){
+  const list=p._feedback||[];
+  if(!list.length) return `<p class="empty" style="padding:6px 0;text-align:left">No feedback yet. Patients can send feedback from their shared progress report.</p>`;
+  // mark as seen
+  const unseen=list.filter(f=>!f.seen).map(f=>f.id);
+  if(unseen.length){ sb.from('feedback').update({seen:true}).in('id',unseen).then(({error})=>{ if(!error){ list.forEach(f=>f.seen=true); S.unseen=(S.unseen||[]).filter(f=>!unseen.includes(f.id)); } }); }
+  const arrow=(b,n)=>{ if(b==null||n==null) return ''; const d=n-b; return d<0?`<span class="fb-good">▼ ${Math.abs(d)}</span>`:d>0?`<span class="fb-bad">▲ ${d}</span>`:`<span class="fb-same">= same</span>`; };
+  return list.map(f=>`<div class="fb">
+    <div class="fb-h"><b>${fmtDate(f.created_at)}</b>${!f.seen?'<span class="tag new">New</span>':''}</div>
+    ${(f.symptoms||[]).length?`<table class="fb-t"><thead><tr><th>Symptom</th><th>At start</th><th>Now</th><th></th></tr></thead><tbody>
+      ${f.symptoms.map(x=>`<tr><td>${esc(x.name)}</td><td class="num">${x.before??'—'}/10</td><td class="num"><b>${x.now??'—'}/10</b></td><td>${arrow(x.before,x.now)}</td></tr>`).join('')}</tbody></table>`:''}
+    ${f.impact_now?`<div class="fb-imp">Impact on daily energy &amp; peace of mind: ${f.impact_before??'—'}/10 → <b>${f.impact_now}/10</b> ${arrow(f.impact_before,f.impact_now)}</div>`:''}
+    ${f.note?`<div class="fb-note">“${esc(f.note)}”</div>`:''}
+  </div>`).join('');
 }
 function cmtRow(c,i){
   return `<div class="cmt" data-date="${esc(c.date||'')}"><div class="cmt-h"><b class="cmt-n">Comment ${i+1}</b>${c.date?`<small>${fmtDate(c.date)}</small>`:''}<button type="button" class="btn-danger rm" style="margin-left:auto">Remove</button></div>
@@ -908,7 +948,7 @@ function ledger(p){
   const last=pays.map(x=>x.paid_on).sort().pop()||null;
   return {paid,fee,due,over,last};
 }
-const mv = a => `<span class="mv">${money(a)}</span>`;
+const mv = a => `<span class="mv"><span class="mv-r">${money(a)}</span><span class="mv-m" aria-label="amount hidden">₹••••</span></span>`;
 const reminderLink=(p,due)=>waLink(p.whatsapp,`Hi ${p.full_name.split(' ')[0]}, a gentle reminder that ${money(due)} is pending as your energy exchange for your healing sessions at The Prana Space. Thank you 🙏`);
 function feeModal(p, after){
   openModal('Case fees · '+esc(p.full_name),`<div class="fld"><label for="fee">Total case fees (₹)</label><input type="number" inputmode="numeric" id="fee" min="0" step="1" value="${p.case_fees??''}"></div>`,
@@ -997,7 +1037,10 @@ async function shareModal(p){
       <a class="btn btn-o" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent(url)}">Share on WhatsApp</a>
       <a class="btn btn-o" target="_blank" rel="noopener" href="${esc(url)}">Open report</a>
     </div>
-    <p style="margin-top:22px;color:var(--muted);font-size:.9rem">Want to take the link back? <button type="button" class="link" id="stopShare" style="color:var(--rose)">Stop sharing</button> and the old link stops working.</p>`,
+    <div style="margin-top:26px;padding-top:18px;border-top:1px solid var(--line)">
+      <p style="margin:0 0 10px;color:var(--muted);font-size:.92rem">Want to take the link back? The old link stops working straight away.</p>
+      <button type="button" class="btn btn-stop" id="stopShare">⛔ Stop sharing</button>
+    </div>`,
     `<button class="btn btn-p" value="cancel">Done</button>`);
   $('#copyShare').onclick=async()=>{ try{ await navigator.clipboard.writeText(url); toast('Link copied'); }catch{ $('#shareUrl').select(); } };
   $('#stopShare').onclick=async()=>{
