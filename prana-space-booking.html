@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book a Session | The Prana Space</title>
+<meta name="description" content="Session booking and registration for Pranic Healing, Twin Hearts Meditation and counselling with Mamta Kaushik at The Prana Space, Pune.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   THE PRANA SPACE — Session Booking & Registration
+   ------------------------------------------------------------
+   Where do responses go? Set ONE of these in the CONFIG block
+   in the <script> at the bottom of this file:
+     1. GOOGLE_FORM  – keeps responses flowing into Mamta's
+                       existing Google Form / Sheet
+     2. FORMSPREE    – emails each response to the inbox
+                       linked to your Formspree form
+   If neither is set, the form sends the answers to Mamta
+   as a pre-filled WhatsApp message.
+   ============================================================ */
+:root{
+  --violet-900:#2E1F55;
+  --violet-700:#4B3487;
+  --violet-500:#7A5CB8;
+  --lavender-200:#E4DAF3;
+  --lavender-100:#F3EEFA;
+  --ivory:#FCFAF5;
+  --gold:#B48A3C;
+  --gold-soft:#E8D6AE;
+  --ink:#2A2338;
+  --muted:#6B6380;
+  --line:#DCD3EA;
+  --error:#A3324B;
+  --serif:"Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans:"Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.6;
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse 520px 420px at -6% -4%, rgba(160,130,215,.32), transparent 70%),
+    radial-gradient(ellipse 460px 520px at 106% 102%, rgba(160,130,215,.28), transparent 70%),
+    radial-gradient(ellipse 380px 300px at 100% 0%, rgba(232,214,174,.35), transparent 70%),
+    var(--ivory);
+  min-height:100vh;
+}
+.wrap{max-width:660px;margin:0 auto;padding:48px 20px 72px}
+
+/* ---------- Header ---------- */
+header{text-align:center;margin-bottom:36px}
+.logo{
+  width:104px;height:104px;border-radius:50%;
+  background:#fff;display:grid;place-items:center;margin:0 auto 14px;
+  box-shadow:0 0 0 1px var(--gold-soft), 0 0 0 7px rgba(255,255,255,.7), 0 0 0 8px var(--gold-soft);
+}
+.logo img{width:92px;height:92px;border-radius:50%;display:block}
+.tagline{font-size:13px;letter-spacing:.22em;color:var(--gold);margin:0 0 22px}
+h1{
+  font-family:var(--serif);font-weight:500;
+  font-size:clamp(34px,6.4vw,48px);line-height:1.08;
+  color:var(--violet-900);margin:0;
+}
+h1 em{display:block;font-style:italic;font-weight:500;color:var(--violet-500);font-size:.72em;margin-top:6px}
+.divider{display:flex;align-items:center;justify-content:center;gap:12px;margin:22px auto 0;max-width:260px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.divider::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.divider svg{width:30px;height:18px;flex:none}
+
+.intro{
+  font-family:var(--serif);font-size:21px;line-height:1.55;
+  color:var(--ink);text-align:center;margin:28px auto 0;max-width:34em;
+}
+.intro p{margin:0 0 12px}
+.intro .small{font-family:var(--sans);font-size:15px;color:var(--muted)}
+
+.care-note{
+  margin:28px 0 0;padding:18px 20px 18px 22px;
+  background:var(--lavender-100);
+  border-left:3px solid var(--gold);
+  border-radius:0 14px 14px 0;
+  font-size:15px;line-height:1.6;color:#4A4260;
+}
+.care-note strong{color:var(--violet-700);font-weight:500}
+
+/* ---------- Form shell ---------- */
+.form-card{
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(6px);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:8px 34px 34px;
+  box-shadow:0 30px 60px -40px rgba(46,31,85,.45);
+}
+fieldset.group{border:0;margin:0;padding:30px 0 4px;min-width:0}
+fieldset.group + fieldset.group{border-top:1px solid var(--line)}
+.group > legend{
+  float:left;width:100%;padding:0;margin:0 0 6px;
+  font-family:var(--serif);font-size:27px;font-weight:600;color:var(--violet-900);
+}
+.group > legend + *{clear:both}
+.group-hint{margin:0 0 18px;color:var(--muted);font-size:15px}
+
+.field{margin:0 0 24px}
+.field:last-child{margin-bottom:12px}
+.label{
+  display:block;font-weight:500;font-size:16px;line-height:1.45;
+  color:var(--ink);margin-bottom:9px;
+}
+.req{color:var(--gold);margin-left:3px}
+.help{display:block;font-size:14px;color:var(--muted);font-weight:400;margin-top:2px}
+
+input[type=text],input[type=email],input[type=tel],textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);
+  background:var(--ivory);
+  border:1px solid var(--line);border-radius:14px;
+  padding:13px 16px;
+  transition:border-color .15s, box-shadow .15s, background .15s;
+}
+textarea{min-height:110px;resize:vertical;line-height:1.55}
+input::placeholder,textarea::placeholder{color:#A39BB5}
+input:focus,textarea:focus{
+  outline:none;background:#fff;border-color:var(--violet-500);
+  box-shadow:0 0 0 4px rgba(122,92,184,.16);
+}
+.phone{display:flex;align-items:stretch}
+.phone span{
+  display:flex;align-items:center;padding:0 14px;
+  background:var(--lavender-100);border:1px solid var(--line);border-right:0;
+  border-radius:14px 0 0 14px;color:var(--violet-700);font-weight:500;font-size:16px;
+}
+.phone input{border-radius:0 14px 14px 0}
+
+/* ---------- Choice pills ---------- */
+.choices{display:flex;flex-wrap:wrap;gap:10px;border:0;padding:0;margin:0}
+.choice{position:relative}
+.choice input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.choice span{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:10px 18px;border-radius:999px;
+  border:1px solid var(--line);background:var(--ivory);
+  font-size:15.5px;color:var(--ink);cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.choice span::before{
+  content:"";width:14px;height:14px;border-radius:50%;
+  border:1.5px solid #B9AED0;flex:none;transition:all .15s;
+}
+.choice input:hover + span{border-color:var(--violet-500)}
+.choice input:checked + span{background:var(--violet-700);border-color:var(--violet-700);color:#fff}
+.choice input:checked + span::before{border-color:var(--gold-soft);background:var(--gold);box-shadow:inset 0 0 0 2.5px var(--violet-700)}
+.choice input:focus-visible + span{box-shadow:0 0 0 4px rgba(122,92,184,.25)}
+.reveal{margin-top:12px}
+.reveal[hidden]{display:none}
+
+/* ---------- Intensity scale (the signature element) ---------- */
+.scale{border:0;padding:0;margin:0}
+.scale-track{
+  display:grid;grid-template-columns:repeat(10,1fr);gap:6px;
+  padding:18px 16px 14px;border-radius:20px;
+  background:linear-gradient(90deg,var(--lavender-100),#EDE4F8 55%,#E2D4F3);
+  border:1px solid var(--line);
+}
+.dot{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
+.dot input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;z-index:1}
+.dot .orb{
+  --s:calc(18px + var(--i) * 2.4px);
+  width:var(--s);height:var(--s);border-radius:50%;
+  border:1.5px solid rgba(75,52,135,.35);
+  background:#fff;
+  transition:background .2s, border-color .2s, transform .2s, box-shadow .2s;
+}
+.dot .num{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dot.lit .orb{
+  border-color:transparent;
+  background:radial-gradient(circle at 35% 30%, #fff8 0 18%, transparent 19%),
+             color-mix(in srgb, var(--violet-900) calc(var(--i) * 10%), #B9A2E2);
+}
+.dot.picked .orb{transform:scale(1.12);box-shadow:0 0 0 3px #fff, 0 0 0 4.5px var(--gold)}
+.dot.picked .num{color:var(--violet-900);font-weight:500}
+.dot input:focus-visible ~ .orb{box-shadow:0 0 0 4px rgba(122,92,184,.35)}
+.dot:hover .orb{border-color:var(--violet-500)}
+.scale-ends{display:flex;justify-content:space-between;gap:16px;margin-top:10px;font-size:14px;color:var(--muted)}
+.scale-ends span:last-child{text-align:right}
+.scale-readout{
+  margin-top:10px;min-height:1.6em;
+  font-family:var(--serif);font-style:italic;font-size:19px;color:var(--violet-700);
+}
+
+/* ---------- Errors ---------- */
+.err{display:none;margin-top:8px;font-size:14px;color:var(--error)}
+.field.invalid .err{display:block}
+.field.invalid input,.field.invalid textarea{border-color:var(--error)}
+.field.invalid .scale-track{border-color:var(--error)}
+
+/* ---------- Actions ---------- */
+.actions{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.btn{
+  appearance:none;border:0;cursor:pointer;
+  font:inherit;font-size:17px;font-weight:500;letter-spacing:.01em;
+  color:#fff;background:var(--violet-700);
+  padding:16px 40px;border-radius:999px;min-width:260px;
+  box-shadow:inset 0 0 0 1px rgba(232,214,174,.5), 0 14px 26px -14px rgba(46,31,85,.7);
+  transition:background .15s, transform .15s;
+}
+.btn:hover{background:var(--violet-900)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn[disabled]{opacity:.65;cursor:progress}
+.btn.ghost{background:transparent;color:var(--violet-700);box-shadow:inset 0 0 0 1.5px var(--violet-700)}
+.btn.ghost:hover{background:var(--lavender-100)}
+.privacy{font-size:13.5px;color:var(--muted);text-align:center;max-width:30em;margin:0}
+.link-btn{background:none;border:0;font:inherit;font-size:14px;color:var(--muted);text-decoration:underline;cursor:pointer}
+.form-error{display:none;color:var(--error);font-size:15px;text-align:center}
+.form-error.show{display:block}
+
+/* ---------- Thank-you state ---------- */
+.thanks{display:none;text-align:center;padding:34px 8px 12px}
+.thanks.show{display:block}
+.thanks h2{font-family:var(--serif);font-weight:500;font-size:38px;color:var(--violet-900);margin:12px 0 10px;line-height:1.15}
+.thanks p{max-width:28em;margin:0 auto 22px;color:#4A4260}
+.thanks svg{width:72px;height:48px}
+
+footer{text-align:center;margin-top:34px;font-size:14px;color:var(--muted)}
+footer a{color:var(--violet-700);text-decoration:none;border-bottom:1px solid var(--gold-soft)}
+footer .sign{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--violet-700);display:block;margin-bottom:6px}
+
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:32px 14px 56px}
+  .form-card{padding:4px 20px 26px;border-radius:22px}
+  .scale-track{gap:2px;padding:14px 8px 10px}
+  .dot .orb{--s:calc(16px + var(--i) * 1.3px)}
+  .btn{width:100%;min-width:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo"><img src="data:image/jpeg;base64,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" alt="The Prana Space logo"></div>
+    <p class="tagline">Heal &nbsp;·&nbsp; Balance &nbsp;·&nbsp; Transform</p>
+    <h1>The Prana Space<em>Session Booking &amp; Registration</em></h1>
+    <div class="divider" aria-hidden="true">
+      <svg viewBox="0 0 30 18" fill="none" stroke="#B48A3C" stroke-width="1.1"><path d="M15 2c3 3 3 9 0 13-3-4-3-10 0-13Z"/><path d="M15 15c-2-3-6-6-10-6 1 4 5 6 10 6Z"/><path d="M15 15c2-3 6-6 10-6-1 4-5 6-10 6Z"/></svg>
+    </div>
+    <div class="intro">
+      <p>Welcome to The Prana Space. Congratulations on taking the first step towards your healing and well-being.</p>
+      <p class="small">Please answer the questions below so I can better understand your needs and support you effectively. Everything you share stays confidential.</p>
+    </div>
+    <div class="care-note" role="note">
+      <strong>Before you begin.</strong> Healing sessions at The Prana Space support your overall well-being and work alongside conventional medical care, not in place of it. Please continue any prescribed treatment, and share anything that may matter for your safety during our sessions.
+    </div>
+  </header>
+
+  <main class="form-card">
+    <form id="intake" novalidate>
+
+      <fieldset class="group">
+        <legend>About you</legend>
+        <p class="group-hint">So I know who I'm speaking with and how to reach you.</p>
+
+        <div class="field" data-field="name">
+          <label class="label" for="name">Full name<span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" autocomplete="name" required>
+          <span class="err">Please enter your full name.</span>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label class="label" for="phone">Contact number<span class="req" aria-hidden="true">*</span>
+            <span class="help">Ideally your WhatsApp number</span></label>
+          <div class="phone"><span>+91</span><input type="tel" id="phone" name="phone" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit mobile number" required></div>
+          <span class="err">Please enter a 10-digit mobile number.</span>
+        </div>
+
+        <div class="field" data-field="email">
+          <label class="label" for="email">Email ID<span class="req" aria-hidden="true">*</span></label>
+          <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required>
+          <span class="err">Please enter a valid email address, like name@gmail.com.</span>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>What brings you here</legend>
+        <p class="group-hint">Share as much or as little as feels right.</p>
+
+        <div class="field" data-field="concern">
+          <fieldset class="choices" aria-describedby="concern-err">
+            <legend class="label">What is the primary concern, challenge, or area of your life you are seeking energetic support for right now?<span class="req" aria-hidden="true">*</span></legend>
+            <label class="choice"><input type="radio" name="concern" value="Physical ailments" required><span>Physical ailments</span></label>
+            <label class="choice"><input type="radio" name="concern" value="Emotional blockages"><span>Emotional blockages</span></label>
+            <label class="choice"><input type="radio" name="concern" value="Chronic Stress"><span>Chronic stress</span></label>
+            <label class="choice"><input type="radio" name="concern" value="Anxiety"><span>Anxiety</span></label>
+            <label class="choice"><input type="radio" name="concern" value="Others"><span>Others</span></label>
+          </fieldset>
+          <div class="reveal" id="concern-other-wrap" hidden>
+            <input type="text" id="concern_other" name="concern_other" placeholder="Tell me a little more (optional)" aria-label="Describe your concern">
+          </div>
+          <span class="err" id="concern-err">Please choose the option closest to what you're facing.</span>
+        </div>
+
+        <div class="field" data-field="heal">
+          <label class="label" for="heal">What is one thing you would like to heal, release, or strengthen in your life at this time?<span class="req" aria-hidden="true">*</span></label>
+          <textarea id="heal" name="heal" required></textarea>
+          <span class="err">Please share at least a few words.</span>
+        </div>
+
+        <div class="field" data-field="medical">
+          <label class="label" for="medical">Is there any relevant medical history, ongoing treatment, or specific physical or mental health condition I should be aware of?<span class="req" aria-hidden="true">*</span>
+            <span class="help">If nothing applies, simply write "None".</span></label>
+          <textarea id="medical" name="medical" required></textarea>
+          <span class="err">Please fill this in, or write "None".</span>
+        </div>
+
+        <div class="field" data-field="intensity">
+          <fieldset class="scale" aria-describedby="scale-err">
+            <legend class="label">On a scale of 1 to 10, how severely is this issue impacting your daily energy levels and peace of mind?<span class="req" aria-hidden="true">*</span></legend>
+            <div class="scale-track" id="scale"></div>
+            <div class="scale-ends" aria-hidden="true"><span>1 · Barely noticeable</span><span>10 · Completely overwhelming</span></div>
+            <div class="scale-readout" id="readout" aria-live="polite"></div>
+          </fieldset>
+          <span class="err" id="scale-err">Please pick a number from 1 to 10.</span>
+        </div>
+      </fieldset>
+
+      <fieldset class="group">
+        <legend>One last thing</legend>
+
+        <div class="field" data-field="source">
+          <fieldset class="choices">
+            <legend class="label">How did you hear about The Prana Space?<span class="req" aria-hidden="true">*</span></legend>
+            <label class="choice"><input type="radio" name="source" value="Social Media" required><span>Social media</span></label>
+            <label class="choice"><input type="radio" name="source" value="Friends &amp; Family"><span>Friends &amp; family</span></label>
+            <label class="choice"><input type="radio" name="source" value="Google Search"><span>Google search</span></label>
+            <label class="choice"><input type="radio" name="source" value="Other"><span>Other</span></label>
+          </fieldset>
+          <span class="err">Please let me know how you found us.</span>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <p class="form-error" id="form-error" role="alert"></p>
+        <button class="btn" type="submit" id="submit">Request my session</button>
+        <p class="privacy">Your answers are seen only by Mamta and used solely to prepare for your sessions.</p>
+        <button class="link-btn" type="reset" id="clear">Clear form</button>
+      </div>
+    </form>
+
+    <section class="thanks" id="thanks" aria-live="polite" tabindex="-1">
+      <svg viewBox="0 0 30 18" fill="none" stroke="#B48A3C" stroke-width=".9" aria-hidden="true"><path d="M15 2c3 3 3 9 0 13-3-4-3-10 0-13Z"/><path d="M15 15c-2-3-6-6-10-6 1 4 5 6 10 6Z"/><path d="M15 15c2-3 6-6 10-6-1 4-5 6-10 6Z"/></svg>
+      <h2 id="thanks-title">Thank you, your request is in</h2>
+      <p id="thanks-body">I'll read your answers carefully and reach out on WhatsApp or email within 24 hours to find a time that works for you.</p>
+      <a class="btn ghost" id="wa-btn" href="#" target="_blank" rel="noopener">Message Mamta on WhatsApp</a>
+    </section>
+  </main>
+
+  <footer>
+    <span class="sign">You don't have to go through it alone.</span>
+    Questions? WhatsApp <a href="https://wa.me/919209557407" target="_blank" rel="noopener">+91 92095 57407</a> or Instagram <a href="https://instagram.com/the_pranaspace" target="_blank" rel="noopener">@the_pranaspace</a>
+  </footer>
+</div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const CONFIG = {
+  WHATSAPP_NUMBER: "919209557407",
+
+  // Option 1 — keep using the existing Google Form/Sheet.
+  // In Google Forms: ⋮ menu → "Get pre-filled link" → fill every answer → "Get link".
+  // The link contains entry.XXXXXXX=... for each question; paste those numbers below.
+  GOOGLE_FORM: {
+    enabled: false,
+    formId: "1FAIpQLScIwej2yFhRSseagGKZvTILeueARpUtNshJmIyFOoQFU1GKLA",
+    entries: {
+      name:      "entry.0000000000",
+      phone:     "entry.0000000000",
+      email:     "entry.0000000000",
+      concern:   "entry.0000000000",
+      heal:      "entry.0000000000",
+      medical:   "entry.0000000000",
+      intensity: "entry.0000000000",
+      source:    "entry.0000000000"
+    }
+  },
+
+  // Option 2 — email each response via Formspree (formspree.io → New form → copy endpoint).
+  FORMSPREE_ENDPOINT: ""   // e.g. "https://formspree.io/f/abcdwxyz"
+};
+/* ================================================== */
+
+const form = document.getElementById('intake');
+const scale = document.getElementById('scale');
+const readout = document.getElementById('readout');
+const feel = ["", "Barely noticeable", "Mild", "Mild", "Noticeable", "Moderate", "Moderate", "Heavy", "Heavy", "Very heavy", "Completely overwhelming"];
+
+// Build the 1–10 scale
+for (let i = 1; i <= 10; i++) {
+  const d = document.createElement('label');
+  d.className = 'dot';
+  d.style.setProperty('--i', i);
+  d.innerHTML = `<input type="radio" name="intensity" value="${i}" ${i===1?'required':''} aria-label="${i} out of 10, ${feel[i]}"><span class="orb"></span><span class="num">${i}</span>`;
+  scale.appendChild(d);
+}
+function paintScale(v){
+  scale.querySelectorAll('.dot').forEach((d, idx) => {
+    d.classList.toggle('lit', idx < v);
+    d.classList.toggle('picked', idx + 1 === v);
+  });
+  readout.textContent = v ? `${v} of 10 — ${feel[v].toLowerCase()}` : '';
+}
+scale.addEventListener('change', e => paintScale(+e.target.value));
+
+// "Others" reveal
+form.addEventListener('change', e => {
+  if (e.target.name === 'concern') {
+    document.getElementById('concern-other-wrap').hidden = e.target.value !== 'Others';
+  }
+  const f = e.target.closest('.field');
+  if (f && f.classList.contains('invalid')) validateField(f);
+});
+form.addEventListener('input', e => {
+  if (e.target.id === 'phone') e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
+  const f = e.target.closest('.field');
+  if (f && f.classList.contains('invalid')) validateField(f);
+});
+form.addEventListener('reset', () => {
+  setTimeout(() => {
+    paintScale(0);
+    document.getElementById('concern-other-wrap').hidden = true;
+    form.querySelectorAll('.field').forEach(f => f.classList.remove('invalid'));
+  });
+});
+
+function val(name){
+  const el = form.elements[name];
+  if (!el) return '';
+  if (el instanceof RadioNodeList) return el.value || '';
+  return (el.value || '').trim();
+}
+function validateField(f){
+  const k = f.dataset.field, v = val(k);
+  let ok = !!v;
+  if (k === 'phone') ok = /^[6-9]\d{9}$/.test(v);
+  if (k === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  f.classList.toggle('invalid', !ok);
+  return ok;
+}
+
+function collect(){
+  const concern = val('concern');
+  const other = val('concern_other');
+  return {
+    name: val('name'),
+    phone: '+91 ' + val('phone'),
+    email: val('email'),
+    concern: concern === 'Others' && other ? `Others: ${other}` : concern,
+    concern_raw: concern,
+    concern_other: other,
+    heal: val('heal'),
+    medical: val('medical'),
+    intensity: val('intensity'),
+    source: val('source')
+  };
+}
+
+function whatsappText(d){
+  return [
+    `🌿 *New session request — The Prana Space*`,
+    ``,
+    `*Name:* ${d.name}`,
+    `*Phone:* ${d.phone}`,
+    `*Email:* ${d.email}`,
+    `*Primary concern:* ${d.concern}`,
+    `*Would like to heal / release / strengthen:* ${d.heal}`,
+    `*Medical history / treatment:* ${d.medical}`,
+    `*Impact (1–10):* ${d.intensity}`,
+    `*Heard about us via:* ${d.source}`
+  ].join('\n');
+}
+
+async function sendGoogle(d){
+  const g = CONFIG.GOOGLE_FORM, e = g.entries, body = new FormData();
+  body.append(e.name, d.name);
+  body.append(e.phone, d.phone);
+  body.append(e.email, d.email);
+  body.append(e.concern, d.concern_raw);              // must match the Google option text exactly
+  body.append(e.heal, d.concern_other ? `[Concern detail: ${d.concern_other}] ${d.heal}` : d.heal);
+  body.append(e.medical, d.medical);
+  body.append(e.intensity, d.intensity);
+  body.append(e.source, d.source);
+  await fetch(`https://docs.google.com/forms/d/e/${g.formId}/formResponse`, { method:'POST', mode:'no-cors', body });
+}
+async function sendFormspree(d){
+  const r = await fetch(CONFIG.FORMSPREE_ENDPOINT, {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+    body: JSON.stringify({
+      _subject: `New session request — ${d.name}`,
+      _replyto: d.email,
+      'Full name': d.name, 'Contact number': d.phone, 'Email': d.email,
+      'Primary concern': d.concern, 'Wants to heal / release / strengthen': d.heal,
+      'Medical history / treatment': d.medical, 'Impact (1–10)': d.intensity,
+      'Heard about us via': d.source
+    })
+  });
+  if (!r.ok) throw new Error('Formspree rejected the submission');
+}
+
+form.addEventListener('submit', async ev => {
+  ev.preventDefault();
+  const fields = [...form.querySelectorAll('.field')];
+  const bad = fields.filter(f => !validateField(f));
+  if (bad.length) {
+    const first = bad[0].querySelector('input, textarea');
+    bad[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (first) setTimeout(() => first.focus({ preventScroll:true }), 300);
+    return;
+  }
+
+  const d = collect();
+  const btn = document.getElementById('submit');
+  const errBox = document.getElementById('form-error');
+  const waLink = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(whatsappText(d))}`;
+  const hasBackend = CONFIG.GOOGLE_FORM.enabled || CONFIG.FORMSPREE_ENDPOINT;
+  errBox.classList.remove('show');
+
+  if (!hasBackend) {
+    // No backend configured: hand the answers to WhatsApp
+    window.open(waLink, '_blank', 'noopener');
+    showThanks(d, waLink, true);
+    return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Sending…';
+  try {
+    if (CONFIG.GOOGLE_FORM.enabled) await sendGoogle(d);
+    if (CONFIG.FORMSPREE_ENDPOINT) await sendFormspree(d);
+    showThanks(d, `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi Mamta, I just filled the booking form on your website. — ${d.name}`)}`, false);
+  } catch (err) {
+    errBox.innerHTML = `Your answers couldn't be sent. Check your connection and try again, or <a href="${waLink}" target="_blank" rel="noopener">send them on WhatsApp instead</a>.`;
+    errBox.classList.add('show');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Request my session';
+  }
+});
+
+function showThanks(d, waLink, viaWhatsApp){
+  form.style.display = 'none';
+  const t = document.getElementById('thanks');
+  const first = d.name.split(' ')[0];
+  document.getElementById('thanks-title').textContent = `Thank you, ${first}`;
+  document.getElementById('thanks-body').textContent = viaWhatsApp
+    ? `WhatsApp should have opened with your answers ready. Just tap send, and I'll get back to you within 24 hours to find a time for your session.`
+    : `Your request is in. I'll read your answers carefully and reach out on WhatsApp or email within 24 hours to find a time that works for you.`;
+  const wa = document.getElementById('wa-btn');
+  wa.href = waLink;
+  wa.textContent = viaWhatsApp ? 'Open WhatsApp again' : 'Message Mamta on WhatsApp';
+  t.classList.add('show');
+  t.scrollIntoView({ behavior:'smooth', block:'start' });
+  t.focus({ preventScroll:true });
+}
+</script>
+</body>
+</html>
